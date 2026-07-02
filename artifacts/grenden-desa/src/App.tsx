@@ -10,6 +10,8 @@ import VisiMisi from "@/pages/visi-misi";
 import Berita from "@/pages/berita";
 import Galeri from "@/pages/galeri";
 import Ppid from "@/pages/ppid";
+import AnggotaKkn from "@/pages/anggota-kkn";
+import KontenSosmed from "@/pages/konten-sosmed";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ function Router() {
       <Route path="/berita" component={Berita} />
       <Route path="/galeri" component={Galeri} />
       <Route path="/ppid" component={Ppid} />
+      <Route path="/anggota-kkn" component={AnggotaKkn} />
+      <Route path="/konten-sosmed" component={KontenSosmed} />
       <Route component={NotFound} />
     </Switch>
   );
