@@ -1,0 +1,56 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "EPITFcFa5y2Pj4Jx9eBUN"
+uri = "file://artifacts/grenden-desa/src/assets/images/kkn-jagung.png"
+type = "image"
+title = "KKN mengolah jagung"
+
+[[generated]]
+id = "JUgMqzfh93hJNUy9hvaaK"
+uri = "file://artifacts/grenden-desa/src/assets/images/bantuan-beras.png"
+type = "image"
+title = "Bantuan beras balai desa"
+
+[[generated]]
+id = "YscQcCl5EJ5tmzWkuFV5C"
+uri = "file://artifacts/grenden-desa/src/assets/images/tanam-pohon.png"
+type = "image"
+title = "Penanaman pohon warga"
+
+[[generated]]
+id = "yBABJrvqKtUhKVDqYScpH"
+uri = "file://artifacts/grenden-desa/src/assets/images/gotong-royong.png"
+type = "image"
+title = "Gotong royong warga"
+
+[[generated]]
+id = "pt9fRJAvLaR30ww9ZmAWm"
+uri = "file://artifacts/grenden-desa/src/assets/images/sawah-hijau.png"
+type = "image"
+title = "Sawah pesisir Jember"
+
+[[generated]]
+id = "JhTFBHix6XbpqMnRWPSpL"
+uri = "file://artifacts/grenden-desa/src/assets/images/kkn-presentasi.png"
+type = "image"
+title = "Presentasi penyuluhan KKN"
+
+[[generated]]
+id = "cBnQM7ML0xgbxV8i0ylaL"
+uri = "file://artifacts/grenden-desa/src/assets/images/balai-desa.png"
+type = "image"
+title = "Warga diskusi balai desa"
+
+[[generated]]
+id = "yxMQZhO4G5Ar3anleDUOU"
+uri = "file://artifacts/grenden-desa/src/assets/images/tari-tradisional.png"
+type = "image"
+title = "Tari tradisional Jatim"
+
+[[generated]]
+id = "ooABfTX3thrnget923kyi"
+uri = "file://artifacts/grenden-desa/src/assets/images/hero-banner.png"
+type = "image"
+title = "Pemandangan udara desa"
