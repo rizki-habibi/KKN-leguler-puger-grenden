@@ -12,22 +12,34 @@ import Galeri from "@/pages/galeri";
 import Ppid from "@/pages/ppid";
 import AnggotaKkn from "@/pages/anggota-kkn";
 import KontenSosmed from "@/pages/konten-sosmed";
+import AdminLogin from "@/pages/admin/login";
+import AdminDashboard from "@/pages/admin/index";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
 
+function PublicPage({ component: Comp }: { component: React.ComponentType }) {
+  return (
+    <Layout>
+      <Comp />
+    </Layout>
+  );
+}
+
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Beranda} />
-      <Route path="/profil" component={Profil} />
-      <Route path="/visi-misi" component={VisiMisi} />
-      <Route path="/berita" component={Berita} />
-      <Route path="/galeri" component={Galeri} />
-      <Route path="/ppid" component={Ppid} />
-      <Route path="/anggota-kkn" component={AnggotaKkn} />
-      <Route path="/konten-sosmed" component={KontenSosmed} />
-      <Route component={NotFound} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/" component={() => <PublicPage component={Beranda} />} />
+      <Route path="/profil" component={() => <PublicPage component={Profil} />} />
+      <Route path="/visi-misi" component={() => <PublicPage component={VisiMisi} />} />
+      <Route path="/berita" component={() => <PublicPage component={Berita} />} />
+      <Route path="/galeri" component={() => <PublicPage component={Galeri} />} />
+      <Route path="/ppid" component={() => <PublicPage component={Ppid} />} />
+      <Route path="/anggota-kkn" component={() => <PublicPage component={AnggotaKkn} />} />
+      <Route path="/konten-sosmed" component={() => <PublicPage component={KontenSosmed} />} />
+      <Route component={() => <PublicPage component={NotFound} />} />
     </Switch>
   );
 }
@@ -37,9 +49,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Layout>
-            <Router />
-          </Layout>
+          <Router />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>
