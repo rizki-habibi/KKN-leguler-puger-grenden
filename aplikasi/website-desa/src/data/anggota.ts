@@ -9,6 +9,23 @@ import anisSuntoni from "@/assets/gambar/foto-anggota/anis-suntoni-divisi-pdd.pn
 import malikiSepta from "@/assets/gambar/foto-anggota/maliki-septa-divisi-pdd.png";
 import reyhanSaputra from "@/assets/gambar/foto-anggota/reyhan-saputra-divisi-pdd.png";
 
+export interface DPL {
+  nama: string;
+  gelar: string;
+  jabatan: string;
+  institusi: string;
+  bidang: string;
+  email?: string;
+}
+
+export const DATA_DPL: DPL = {
+  nama: "Faizal Abrolillah",
+  gelar: "S.Kom., M.Kom.",
+  jabatan: "Dosen Pembimbing Lapangan",
+  institusi: "Institut Teknologi Sepuluh Nopember (ITS)",
+  bidang: "Sistem & Teknologi Informasi",
+};
+
 export interface AnggotaKkn {
   id: number;
   nama: string;
@@ -158,5 +175,29 @@ export const ANGGOTA_KKN: AnggotaKkn[] = [
     bidangKeahlian: ["Fotografi", "Editing Video", "Desain Publikasi"],
     pengalaman: [],
     urutan: 10,
+  },
+];
+
+export interface DPL {
+  nama: string;
+  gelar: string;
+  nidn: string;
+  prodi: string;
+  institusi: string;
+  email: string;
+  fotoUrl: string | null;
+  bidangKeahlian: string[];
+}
+
+export const DATA_DPL: DPL[] = [
+  {
+    nama: "Faizal Abrolillah",
+    gelar: "S.Kom., M.Kom.",
+    nidn: "-",
+    prodi: "Sistem & Teknologi Informasi",
+    institusi: "Institut Teknologi Sepuluh Nopember (ITS)",
+    email: "-",
+    fotoUrl: null, // TODO: tambahkan foto DPL saat tersedia
+    bidangKeahlian: ["Sistem Informasi", "Teknologi Informasi", "Pengabdian Masyarakat"],
   },
 ];

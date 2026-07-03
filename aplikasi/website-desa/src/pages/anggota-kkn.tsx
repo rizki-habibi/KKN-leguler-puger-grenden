@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Briefcase, Star, ChevronDown, ChevronUp, GraduationCap, BookOpen } from "lucide-react";
+import { Users, Briefcase, Star, ChevronDown, ChevronUp, GraduationCap, BookOpen, Award, Mail } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
-import { ANGGOTA_KKN, type AnggotaKkn } from "@/data/anggota";
+import { ANGGOTA_KKN, DATA_DPL, type AnggotaKkn, type DPL } from "@/data/anggota";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 
@@ -140,6 +141,76 @@ function KartuAnggota({ a }: { a: AnggotaKkn }) {
   );
 }
 
+function KartuDPL({ dpl }: { dpl: DPL }) {
+  return (
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      className="bg-white rounded-2xl shadow-sm border border-primary/20 overflow-hidden flex flex-col max-w-sm mx-auto w-full"
+    >
+      {/* Foto / Avatar */}
+      <div className="relative bg-gradient-to-br from-primary/10 to-primary/5">
+        {dpl.fotoUrl ? (
+          <img
+            src={dpl.fotoUrl}
+            alt={dpl.nama}
+            className="w-full h-auto object-contain block"
+          />
+        ) : (
+          <div className="w-full aspect-[3/4] flex flex-col items-center justify-center gap-3 p-6">
+            <div className="w-24 h-24 rounded-full bg-primary/20 border-4 border-primary/30 flex items-center justify-center">
+              <GraduationCap className="w-12 h-12 text-primary/60" />
+            </div>
+            <p className="text-xs text-primary/50 font-medium text-center">Foto akan segera tersedia</p>
+          </div>
+        )}
+        {/* Badge DPL */}
+        <div className="absolute top-3 left-3">
+          <span className="bg-primary text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+            <Award className="w-3 h-3" />
+            DPL
+          </span>
+        </div>
+      </div>
+
+      {/* Info */}
+      <div className="p-5 flex flex-col gap-3 flex-1">
+        <div>
+          <h3 className="font-bold text-foreground text-base font-serif leading-tight">
+            {dpl.nama}
+          </h3>
+          <p className="text-sm text-primary font-medium mt-0.5">{dpl.gelar}</p>
+          <p className="text-xs text-muted-foreground mt-1">{dpl.prodi}</p>
+          <p className="text-xs text-muted-foreground">{dpl.institusi}</p>
+        </div>
+
+        {dpl.bidangKeahlian.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5 flex items-center gap-1">
+              <Star className="w-3 h-3" />
+              Bidang Keahlian
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {dpl.bidangKeahlian.map((k) => (
+                <span key={k} className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                  {k}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {dpl.email && dpl.email !== "-" && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-auto">
+            <Mail className="w-3.5 h-3.5 shrink-0" />
+            <span>{dpl.email}</span>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AnggotaKkn() {
   const anggota = ANGGOTA_KKN;
 
@@ -191,6 +262,29 @@ export default function AnggotaKkn() {
       {/* Konten */}
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl space-y-16">
+
+          {/* ── DOSEN PEMBIMBING LAPANGAN ── */}
+          <FadeIn>
+            <div>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-px flex-1 bg-border" />
+                <h2 className="text-xl font-bold font-serif text-foreground whitespace-nowrap flex items-center gap-2">
+                  <Award className="w-5 h-5 text-primary" />
+                  Dosen Pembimbing Lapangan
+                </h2>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+              <div className="flex justify-center">
+                <div className="grid grid-cols-1 gap-6 max-w-xs w-full">
+                  {DATA_DPL.map((dpl) => (
+                    <KartuDPL key={dpl.nama} dpl={dpl} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* ── ANGGOTA KKN ── */}
           {dikelompokkan.map((grup, gi) => (
             <FadeIn key={grup.divisi} delay={gi * 0.08}>
               <div>

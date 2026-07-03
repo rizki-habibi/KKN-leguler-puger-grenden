@@ -46,8 +46,13 @@ export function AsistenAI() {
   // Cek apakah serverless proxy tersedia (Vercel deployment)
   const [adaProxy, setAdaProxy] = useState<boolean | null>(null);
   useEffect(() => {
-    fetch("/api/gemini", { method: "OPTIONS" })
-      .then((r) => setAdaProxy(r.ok || r.status === 200 || r.status === 405))
+    // Kirim POST kosong — proxy akan balas 400 (bukan 404), artinya proxy ada
+    fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pesan: "" }),
+    })
+      .then((r) => setAdaProxy(r.status !== 404))
       .catch(() => setAdaProxy(false));
   }, []);
 
@@ -144,14 +149,13 @@ export function AsistenAI() {
           { dari: "ai", isi: jawaban, waktu: new Date() },
         ]);
       }
-    } catch {
+    } catch (err) {
+      const pesanError = err instanceof Error && err.message.includes("503")
+        ? "Layanan AI sementara tidak tersedia. Coba lagi sebentar. 🙏"
+        : "Maaf, terjadi kesalahan. Silakan coba lagi. 🙏";
       setPesan((prev) => [
         ...prev,
-        {
-          dari: "ai",
-          isi: "Maaf, terjadi kesalahan. Silakan coba lagi. 🙏",
-          waktu: new Date(),
-        },
+        { dari: "ai", isi: pesanError, waktu: new Date() },
       ]);
     } finally {
       setSedangMemuat(false);

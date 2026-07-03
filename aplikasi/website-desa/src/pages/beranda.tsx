@@ -4,10 +4,10 @@ import {
   ArrowRight, Users, Map, Clock, Building, MapPin,
   Phone, Mail, Globe, BookOpen, Eye, Camera, Newspaper,
   Link as LinkIcon, ShieldCheck, ChevronRight, Bot, Sparkles,
-  Fish, Wheat, Music, Waves, Anchor, HeartHandshake,
+  Fish, Wheat, Music, Waves, Anchor, HeartHandshake, GraduationCap, Award,
 } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
-import { ANGGOTA_KKN, type AnggotaKkn } from "@/data/anggota";
+import { ANGGOTA_KKN, DATA_DPL, type AnggotaKkn } from "@/data/anggota";
 import { Button } from "@/components/ui/button";
 import heroBanner from "@/assets/gambar/desa/foto-desa-utama.png";
 import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
@@ -397,6 +397,49 @@ export default function Beranda() {
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-5xl">
           <SectionTitle label="Tim KKN" title="Anggota KKN Reguler ITS Mandala Jember" desc="Mahasiswa yang bertugas melaksanakan program pengabdian masyarakat di Desa Grenden tahun 2026." />
+
+          {/* Card Dosen Pembimbing Lapangan */}
+          {DATA_DPL.map((dpl) => (
+            <FadeIn key={dpl.nama}>
+              <div className="mb-10 flex justify-center">
+                <motion.div
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                  className="bg-white rounded-2xl border border-primary/20 shadow-sm overflow-hidden flex flex-col sm:flex-row max-w-xl w-full"
+                >
+                  {/* Avatar */}
+                  <div className="sm:w-36 shrink-0 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center p-6 sm:p-0">
+                    {dpl.fotoUrl ? (
+                      <img src={dpl.fotoUrl} alt={dpl.nama} className="w-24 h-24 rounded-full object-cover border-4 border-primary/20" />
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-primary/15 border-4 border-primary/20 flex items-center justify-center">
+                        <GraduationCap className="w-10 h-10 text-primary/50" />
+                      </div>
+                    )}
+                  </div>
+                  {/* Info */}
+                  <div className="p-5 flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-primary text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                        <Award className="w-3 h-3" />Dosen Pembimbing Lapangan
+                      </span>
+                    </div>
+                    <h3 className="font-bold text-foreground font-serif text-lg leading-tight">{dpl.nama}</h3>
+                    <p className="text-primary text-sm font-medium">{dpl.gelar}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{dpl.prodi}</p>
+                    <p className="text-xs text-muted-foreground">{dpl.institusi}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {dpl.bidangKeahlian.map((k) => (
+                        <span key={k} className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">{k}</span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </FadeIn>
+          ))}
+
+          {/* Grid Anggota */}
           {anggota.length === 0 ? (
             <FadeIn>
               <div className="text-center py-10 bg-white rounded-2xl border border-border">

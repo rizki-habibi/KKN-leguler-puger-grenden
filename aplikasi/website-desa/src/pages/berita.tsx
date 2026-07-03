@@ -1,171 +1,125 @@
+import { useState, useEffect } from "react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
-import { Clock, Users, Calendar, ArrowRight } from "lucide-react";
-import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
-import bantuanBeras from "@/assets/gambar/kegiatan/bantuan-beras.png";
-import kknPresentasi from "@/assets/gambar/kegiatan/kkn-presentasi.png";
+import { Calendar, ArrowRight, Newspaper, Tag } from "lucide-react";
+import { api, type Berita } from "@/lib/api";
+
+// Fallback data statis kalau backend tidak tersedia
+const BERITA_STATIS: Berita[] = [
+  { id: 1, judul: "KKN ITS Mandala Jember Resmi Bertugas di Desa Grenden", slug: "kkn-its-resmi-bertugas", ringkasan: "Tim KKN Reguler ITS Mandala Jember 2026 resmi diserahkan dan mulai bertugas di Desa Grenden.", isi: null, gambarUrl: "/gambar/kegiatan/kkn-presentasi.png", kategori: "KKN", diterbitkan: true, createdAt: "2026-07-01T00:00:00.000Z", updatedAt: "2026-07-01T00:00:00.000Z" },
+  { id: 2, judul: "Inovasi Produk Olahan Jagung Tingkatkan Nilai Ekonomi Warga", slug: "inovasi-olahan-jagung", ringkasan: "Mahasiswa KKN berkolaborasi dengan ibu-ibu PKK untuk mengembangkan produk olahan jagung bernilai ekonomi tinggi.", isi: null, gambarUrl: "/gambar/kegiatan/kkn-jagung.png", kategori: "Pertanian", diterbitkan: true, createdAt: "2026-07-02T00:00:00.000Z", updatedAt: "2026-07-02T00:00:00.000Z" },
+  { id: 3, judul: "Gotong Royong Pembersihan Lingkungan Desa Grenden", slug: "gotong-royong-2026", ringkasan: "Mahasiswa KKN bersama warga Desa Grenden menggelar kegiatan gotong royong membersihkan lingkungan.", isi: null, gambarUrl: "/gambar/kegiatan/gotong-royong.png", kategori: "Sosial", diterbitkan: true, createdAt: "2026-07-03T00:00:00.000Z", updatedAt: "2026-07-03T00:00:00.000Z" },
+];
+
+const WARNA_KATEGORI: Record<string, string> = {
+  KKN: "bg-green-100 text-green-700",
+  Pertanian: "bg-amber-100 text-amber-700",
+  Sosial: "bg-blue-100 text-blue-700",
+  Program: "bg-purple-100 text-purple-700",
+  Budaya: "bg-pink-100 text-pink-700",
+  Umum: "bg-gray-100 text-gray-600",
+};
 
 export default function Berita() {
-  const beritaList = [
-    {
-      id: 1,
-      judul: "Mahasiswa KKN Reguler ITS Mandala Jember Inovasikan Produk Olahan Jagung di Desa Grenden",
-      tanggal: "20 Agustus 2025",
-      dibaca: 298,
-      gambar: kknJagung
-    },
-    {
-      id: 2,
-      judul: "Produk Hasil Pangan Lokal KKN Reguler ITS Mandala Jember Grenden Hadirkan Camilan dan Sirup Bergizi",
-      tanggal: "13 Agustus 2025",
-      dibaca: 381,
-      gambar: "https://images.unsplash.com/photo-1605296830594-5cb16298dcba?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 3,
-      judul: "Katalog Potensi Komoditas Pangan Desa Grenden oleh KKN Reguler ITS Mandala Jember Tahun 2026",
-      tanggal: "4 Agustus 2025",
-      dibaca: 565,
-      gambar: "https://images.unsplash.com/photo-1595183497121-69eb3bd6c57f?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 4,
-      judul: "Potret Potensi Dan Kesejahteraan Warga Oleh Mahasiswa KKN Reguler ITS Mandala Jember 2026",
-      tanggal: "4 Agustus 2025",
-      dibaca: 719,
-      gambar: kknPresentasi
-    },
-    {
-      id: 5,
-      judul: "Mahasiswa KKN Reguler ITS Mandala Jember Ikut Serta Dalam Penyaluran Bantuan Beras di Desa Grenden",
-      tanggal: "28 Juli 2025",
-      dibaca: 426,
-      gambar: bantuanBeras
-    },
-    {
-      id: 6,
-      judul: "Penyaluran Bantuan Langsung Tunai (BLT) Dana Desa Bulan April Tahun 2023",
-      tanggal: "17 April 2023",
-      dibaca: 1609,
-      gambar: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 7,
-      judul: "Penyaluran Bantuan Insentif Guru Ngaji dan PAUD Tahun Anggaran 2023",
-      tanggal: "16 Maret 2023",
-      dibaca: 9710,
-      gambar: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 8,
-      judul: "Giat Bimtek Percepatan Input IDM 2023",
-      tanggal: "19 Mei 2023",
-      dibaca: 494,
-      gambar: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 9,
-      judul: "Kegiatan Bimbingan Teknis Oleh T.A DPMD Kabupaten Jember",
-      tanggal: "17 Mei 2023",
-      dibaca: 489,
-      gambar: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 10,
-      judul: "Musyawarah Desa Khusus Penetapan Penerima BLT-DD Tahun 2023",
-      tanggal: "1 Februari 2023",
-      dibaca: 699,
-      gambar: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 11,
-      judul: "Persiapan Giat Penanaman Pohon HARI DESA ASRI NUSANTARA",
-      tanggal: "10 Maret 2023",
-      dibaca: 1071,
-      gambar: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 12,
-      judul: "Penyaluran BLT-DD Periode Januari Februari dan Maret Tahun 2023",
-      tanggal: "2 Maret 2023",
-      dibaca: 2975,
-      gambar: "https://images.unsplash.com/photo-1603525166258-0056911cdd25?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 13,
-      judul: "Kegiatan Jumat Curhat Bersama Polsek Puger",
-      tanggal: "1 Februari 2023",
-      dibaca: 439,
-      gambar: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 14,
-      judul: "Giat Supervisi PSN dan GJB 60 Menit",
-      tanggal: "13 Januari 2023",
-      dibaca: 634,
-      gambar: "https://images.unsplash.com/photo-1579361730055-66fb49f1ff4f?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 15,
-      judul: "Peningkatan Kapasitas Kelompok SPP dan Penyaluran CSR Bersama Pemdes Grenden",
-      tanggal: "3 Maret 2023",
-      dibaca: 568,
-      gambar: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
-    }
-  ];
+  const [beritaList, setBeritaList] = useState<Berita[]>(BERITA_STATIS);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("Semua");
+
+  useEffect(() => {
+    api.berita.list(false)
+      .then((data) => { if (data.length > 0) setBeritaList(data); })
+      .catch(() => { /* pakai data statis */ })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const kategoriAda = ["Semua", ...Array.from(new Set(beritaList.map((b) => b.kategori ?? "Umum")))];
+  const beritaTampil = filter === "Semua" ? beritaList : beritaList.filter((b) => (b.kategori ?? "Umum") === filter);
+
+  const formatTgl = (d: string) =>
+    new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Header */}
-      <section className="bg-primary text-primary-foreground py-20 md:py-28 relative">
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center max-w-3xl">
+      <section className="bg-primary text-primary-foreground py-20 md:py-28">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl">
           <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-6">Berita Desa</h1>
+            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Newspaper className="w-8 h-8 text-accent" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Berita Desa</h1>
             <p className="text-xl text-primary-foreground/80 leading-relaxed">
-              Kabar terbaru, pengumuman, dan dokumentasi kegiatan pembangunan di Desa Grenden.
+              Kabar terbaru, pengumuman, dan dokumentasi kegiatan pembangunan Desa Grenden.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Berita Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {beritaList.map((berita) => (
-              <StaggerItem key={berita.id}>
-                <div className="bg-card rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col group cursor-pointer">
-                  <div className="aspect-[4/3] relative overflow-hidden bg-muted">
-                    <div className="absolute inset-0 bg-primary/20 mix-blend-multiply z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img
-                      src={berita.gambar}
-                      alt={berita.judul}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-6 flex-grow flex flex-col">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-4 font-medium">
-                      <span className="flex items-center gap-1.5 bg-muted/50 px-2.5 py-1 rounded-md">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {berita.tanggal}
-                      </span>
-                      <span className="flex items-center gap-1.5 bg-muted/50 px-2.5 py-1 rounded-md">
-                        <Users className="w-3.5 h-3.5" />
-                        {berita.dibaca}x
-                      </span>
+      {/* Filter Kategori */}
+      <div className="sticky top-[72px] z-40 bg-background/95 backdrop-blur-sm border-b py-3 px-4">
+        <div className="container mx-auto max-w-5xl flex flex-wrap gap-2">
+          {kategoriAda.map((k) => (
+            <button
+              key={k}
+              onClick={() => setFilter(k)}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors border ${filter === k ? "bg-primary text-white border-primary" : "bg-muted text-muted-foreground border-transparent hover:border-border"
+                }`}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Konten */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-5xl">
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="rounded-2xl border bg-muted animate-pulse h-72" />
+              ))}
+            </div>
+          ) : beritaTampil.length === 0 ? (
+            <div className="text-center py-24 text-muted-foreground">
+              <Newspaper className="w-12 h-12 mx-auto mb-4 opacity-30" />
+              <p className="text-lg font-medium">Belum ada berita</p>
+            </div>
+          ) : (
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {beritaTampil.map((b) => (
+                <StaggerItem key={b.id}>
+                  <div className="bg-card rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col group cursor-pointer">
+                    <div className="aspect-[4/3] relative overflow-hidden bg-muted">
+                      {b.gambarUrl ? (
+                        <img src={b.gambarUrl} alt={b.judul} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" onError={(e) => (e.currentTarget.style.display = "none")} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Newspaper className="w-12 h-12 text-muted-foreground/30" /></div>
+                      )}
+                      {b.kategori && (
+                        <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 ${WARNA_KATEGORI[b.kategori] ?? WARNA_KATEGORI["Umum"]}`}>
+                          <Tag className="w-3 h-3" />{b.kategori}
+                        </span>
+                      )}
                     </div>
-                    <h2 className="text-lg font-bold text-foreground mb-4 line-clamp-3 group-hover:text-primary transition-colors leading-snug">
-                      {berita.judul}
-                    </h2>
-                    <div className="mt-auto pt-4 border-t flex items-center text-sm font-bold text-primary">
-                      Baca Berita
-                      <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <div className="p-5 flex-1 flex flex-col">
+                      <span className="flex items-center gap-1.5 text-xs text-muted-foreground mb-3">
+                        <Calendar className="w-3.5 h-3.5" />{formatTgl(b.createdAt)}
+                      </span>
+                      <h2 className="text-base font-bold text-foreground mb-2 line-clamp-3 group-hover:text-primary transition-colors leading-snug">
+                        {b.judul}
+                      </h2>
+                      {b.ringkasan && (
+                        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{b.ringkasan}</p>
+                      )}
+                      <div className="mt-auto pt-3 border-t flex items-center text-sm font-bold text-primary">
+                        Baca Selengkapnya <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          )}
         </div>
       </section>
     </div>
