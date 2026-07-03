@@ -3,13 +3,7 @@
   "outputDirectory": "dist/public",
   "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile --ignore-scripts",
   "framework": "vite",
-  "functions": {
-    "api/gemini.ts": {
-      "runtime": "@vercel/node@5"
-    }
-  },
   "rewrites": [
-    { "source": "/api/gemini", "destination": "/api/gemini" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
