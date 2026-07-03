@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Users, Briefcase, Star, ChevronDown, ChevronUp, GraduationCap, BookOpen, Award, Mail } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
