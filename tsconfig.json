@@ -4,13 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./lib/db"
+      "path": "./pustaka/database"
     },
     {
-      "path": "./lib/api-client-react"
-    },
-    {
-      "path": "./lib/api-zod"
+      "path": "./pustaka/validasi-api"
     }
   ]
 }
