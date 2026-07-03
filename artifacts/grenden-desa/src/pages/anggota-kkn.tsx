@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Users, Briefcase, Star, ChevronDown, ChevronUp } from "lucide-react";
+import { Users, Briefcase, Star, ChevronDown, ChevronUp, GraduationCap, BookOpen } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
 import { api, type AnggotaKkn } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -45,13 +45,13 @@ function KartuAnggota({ a }: { a: AnggotaKkn }) {
       className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden flex flex-col"
       data-testid={`card-anggota-${a.id}`}
     >
-      {/* Foto / Avatar */}
-      <div className="relative">
+      {/* Foto / Avatar — full image, no crop */}
+      <div className="relative bg-[#0a1628]">
         {a.fotoUrl ? (
           <img
             src={a.fotoUrl}
             alt={a.nama}
-            className="w-full h-44 object-cover object-top"
+            className="w-full h-auto object-contain block"
             onError={(e) => {
               e.currentTarget.style.display = "none";
               (e.currentTarget.nextElementSibling as HTMLElement)?.style.setProperty("display", "flex");
@@ -59,17 +59,26 @@ function KartuAnggota({ a }: { a: AnggotaKkn }) {
           />
         ) : null}
         <div
-          className={`w-full h-44 bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-5xl font-serif ${a.fotoUrl ? "hidden" : "flex"}`}
+          className={`w-full aspect-[3/4] bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-5xl font-serif ${a.fotoUrl ? "hidden" : "flex"}`}
         >
           {a.nama.charAt(0).toUpperCase()}
         </div>
       </div>
 
       {/* Info */}
-      <div className="p-5 flex-1 flex flex-col gap-3">
+      <div className="p-4 flex-1 flex flex-col gap-2">
         <div>
-          <h3 className="font-bold text-foreground text-lg font-serif leading-tight">{a.nama}</h3>
-          <p className="text-sm text-muted-foreground mt-0.5">{a.divisi}</p>
+          <h3 className="font-bold text-foreground text-base font-serif leading-tight">{a.nama}</h3>
+          {(a.nim || a.programStudi) && (
+            <div className="flex flex-wrap items-center gap-1.5 mt-1">
+              {a.nim && (
+                <span className="text-xs text-muted-foreground font-mono bg-muted px-1.5 py-0.5 rounded">{a.nim}</span>
+              )}
+              {a.programStudi && (
+                <span className="text-xs text-primary font-medium">{a.programStudi}</span>
+              )}
+            </div>
+          )}
           <Badge className="mt-2 text-xs">{a.jabatan}</Badge>
         </div>
 
@@ -162,11 +171,28 @@ export default function AnggotaKkn() {
             <p className="text-white/80 text-lg max-w-xl mx-auto">
               Tim mahasiswa KKN Reguler ITS Mandala Jember yang bertugas di Desa Grenden, Kecamatan Puger, Kabupaten Jember.
             </p>
-            {anggota.length > 0 && (
-              <div className="mt-8 inline-flex items-center gap-2 bg-white/20 rounded-full px-5 py-2 text-sm font-semibold">
-                Total {anggota.length} Anggota Aktif
+
+            {/* Info KKN */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              {anggota.length > 0 && (
+                <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-5 py-2 text-sm font-semibold">
+                  <Users className="w-4 h-4" />
+                  {anggota.length} Anggota Aktif
+                </div>
+              )}
+              <div className="inline-flex items-center gap-2 bg-white/20 rounded-xl px-5 py-2.5 text-sm">
+                <GraduationCap className="w-4 h-4 shrink-0" />
+                <div className="text-left">
+                  <p className="text-white/70 text-xs font-semibold uppercase tracking-wide">Dosen Pembimbing Lapangan</p>
+                  <p className="font-bold text-white text-sm">Faizal Abrolillah, S.Kom., M.Kom.</p>
+                </div>
               </div>
-            )}
+            </div>
+
+            {/* Lokasi */}
+            <div className="mt-3 inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-xs text-white/80">
+              📍 Desa Grenden, Kecamatan Puger, Kabupaten Jember
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -204,17 +230,45 @@ export default function AnggotaKkn() {
                   <h2 className="text-xl font-bold font-serif text-foreground whitespace-nowrap">{grup.divisi}</h2>
                   <div className="h-px flex-1 bg-border" />
                 </div>
-                <div className={`grid gap-6 ${
-                  grup.anggota.length === 1 ? "grid-cols-1 max-w-xs mx-auto" :
-                  grup.anggota.length === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-lg mx-auto" :
-                  grup.anggota.length === 3 ? "grid-cols-1 sm:grid-cols-3" :
-                  "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+                <div className={`grid gap-5 ${
+                  grup.anggota.length === 1 ? "grid-cols-1 max-w-[220px] mx-auto" :
+                  grup.anggota.length === 2 ? "grid-cols-2 max-w-sm mx-auto" :
+                  grup.anggota.length === 3 ? "grid-cols-3 max-w-2xl mx-auto" :
+                  grup.anggota.length === 4 ? "grid-cols-2 sm:grid-cols-4" :
+                  grup.anggota.length === 5 ? "grid-cols-2 sm:grid-cols-5" :
+                  "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
                 }`}>
                   {grup.anggota.map((a) => <KartuAnggota key={a.id} a={a} />)}
                 </div>
               </div>
             </FadeIn>
           ))}
+        </div>
+      </section>
+
+      {/* Info Tambahan */}
+      <section className="py-12 px-4 bg-muted/30 border-t border-border">
+        <div className="container mx-auto max-w-4xl">
+          <div className="grid sm:grid-cols-3 gap-4 text-center">
+            <div className="bg-white rounded-xl border border-border p-5 shadow-sm">
+              <BookOpen className="w-6 h-6 text-primary mx-auto mb-2" />
+              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">Program</p>
+              <p className="font-bold text-foreground mt-1">KKN Reguler</p>
+              <p className="text-sm text-muted-foreground">ITS Mandala Jember</p>
+            </div>
+            <div className="bg-white rounded-xl border border-border p-5 shadow-sm">
+              <GraduationCap className="w-6 h-6 text-primary mx-auto mb-2" />
+              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">Dosen Pembimbing</p>
+              <p className="font-bold text-foreground mt-1">Faizal Abrolillah</p>
+              <p className="text-sm text-muted-foreground">S.Kom., M.Kom.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-border p-5 shadow-sm">
+              <Users className="w-6 h-6 text-primary mx-auto mb-2" />
+              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">Lokasi</p>
+              <p className="font-bold text-foreground mt-1">Desa Grenden</p>
+              <p className="text-sm text-muted-foreground">Kec. Puger, Kab. Jember</p>
+            </div>
+          </div>
         </div>
       </section>
     </div>

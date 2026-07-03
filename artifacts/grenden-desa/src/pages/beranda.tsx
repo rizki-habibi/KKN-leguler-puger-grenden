@@ -421,9 +421,11 @@ export default function Beranda() {
                         className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden text-center"
                       >
                         {a.fotoUrl ? (
-                          <img src={a.fotoUrl} alt={a.nama} className="w-full aspect-square object-cover object-top" />
+                          <div className="bg-[#0a1628]">
+                            <img src={a.fotoUrl} alt={a.nama} className="w-full h-auto object-contain block" />
+                          </div>
                         ) : (
-                          <div className={`w-full aspect-square bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-3xl font-serif`}>
+                          <div className={`w-full aspect-[3/4] bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-3xl font-serif`}>
                             {a.nama.charAt(0).toUpperCase()}
                           </div>
                         )}

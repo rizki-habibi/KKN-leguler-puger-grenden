@@ -39,6 +39,7 @@ const JABATAN_OPTIONS = [
 
 const FORM_AWAL: AnggotaPayload = {
   nama: "", jabatan: "Anggota", divisi: "Pengurus Inti",
+  nim: null, programStudi: null,
   fotoUrl: null, bio: null, bidangKeahlian: [], pengalaman: [], urutan: 0,
 };
 
@@ -140,7 +141,7 @@ export default function AdminDashboard() {
   function bukaForm(a?: AnggotaKkn) {
     if (a) {
       setEditId(a.id);
-      setFormData({ nama: a.nama, jabatan: a.jabatan, divisi: a.divisi, fotoUrl: a.fotoUrl, bio: a.bio, bidangKeahlian: a.bidangKeahlian ?? [], pengalaman: a.pengalaman ?? [], urutan: a.urutan });
+      setFormData({ nama: a.nama, jabatan: a.jabatan, divisi: a.divisi, nim: a.nim, programStudi: a.programStudi, fotoUrl: a.fotoUrl, bio: a.bio, bidangKeahlian: a.bidangKeahlian ?? [], pengalaman: a.pengalaman ?? [], urutan: a.urutan });
     } else {
       setEditId(null);
       setFormData(FORM_AWAL);
@@ -446,6 +447,16 @@ export default function AdminDashboard() {
             <div className="space-y-1.5">
               <Label>Nama Lengkap *</Label>
               <Input placeholder="Nama anggota" value={formData.nama} onChange={(e) => setFormData((f) => ({ ...f, nama: e.target.value }))} data-testid="input-nama" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label>NIM</Label>
+                <Input placeholder="23020066" value={formData.nim ?? ""} onChange={(e) => setFormData((f) => ({ ...f, nim: e.target.value || null }))} />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Program Studi</Label>
+                <Input placeholder="Ekonomi Pembangunan" value={formData.programStudi ?? ""} onChange={(e) => setFormData((f) => ({ ...f, programStudi: e.target.value || null }))} />
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">

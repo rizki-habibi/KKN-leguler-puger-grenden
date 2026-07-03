@@ -29,6 +29,8 @@ export interface AnggotaKkn {
   nama: string;
   jabatan: string;
   divisi: string;
+  nim: string | null;
+  programStudi: string | null;
   fotoUrl: string | null;
   bio: string | null;
   bidangKeahlian: string[];

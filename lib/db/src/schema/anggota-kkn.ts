@@ -14,6 +14,8 @@ export const anggotaKknTable = pgTable("anggota_kkn", {
   nama: text("nama").notNull(),
   jabatan: text("jabatan").notNull(),
   divisi: text("divisi").notNull(),
+  nim: text("nim"),
+  programStudi: text("program_studi"),
   fotoUrl: text("foto_url"),
   bio: text("bio"),
   bidangKeahlian: jsonb("bidang_keahlian").$type<string[]>().default([]),
