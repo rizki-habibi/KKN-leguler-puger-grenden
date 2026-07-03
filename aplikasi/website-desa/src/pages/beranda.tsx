@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Users, Map, Clock, Building, MapPin,
   Phone, Mail, Globe, BookOpen, Eye, Camera, Newspaper,
-  Link as LinkIcon, ShieldCheck, ChevronRight,
+  Link as LinkIcon, ShieldCheck, ChevronRight, Bot, Sparkles,
+  Fish, Wheat, Music, Waves, Anchor, HeartHandshake,
 } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
 import { api, type AnggotaKkn } from "@/lib/api";

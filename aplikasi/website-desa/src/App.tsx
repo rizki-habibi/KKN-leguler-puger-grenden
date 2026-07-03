@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { Layout } from "@/components/layout";
+import { AsistenAI } from "@/components/asisten-ai";
 import Beranda from "@/pages/beranda";
 import Profil from "@/pages/profil";
 import VisiMisi from "@/pages/visi-misi";
@@ -52,6 +53,7 @@ function App() {
           <Router />
         </WouterRouter>
         <Toaster />
+        <AsistenAI />
       </TooltipProvider>
     </QueryClientProvider>
   );
