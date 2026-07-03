@@ -20,9 +20,9 @@ import balaiDesa from "@/assets/images/balai-desa.png";
 import tariTradisional from "@/assets/images/tari-tradisional.png";
 
 const BERITA = [
-  { id: 1, judul: "Mahasiswa KKN Kolaboratif Kelompok 018 Inovasikan Produk Olahan Jagung di Desa Grenden", tanggal: "20 Agustus 2025", dibaca: 298, gambar: kknJagung },
-  { id: 2, judul: "Produk Hasil Pangan Lokal KKN Kolaboratif 018 Grenden Hadirkan Camilan dan Sirup Bergizi", tanggal: "13 Agustus 2025", dibaca: 381, gambar: bantuanBeras },
-  { id: 3, judul: "KATALOG POTENSI KOMODITAS PANGAN DI DESA GRENDEN OLEH KKN KOLABORATIF KELOMPOK 018 TAHUN 2025", tanggal: "4 Agustus 2025", dibaca: 565, gambar: tanamPohon },
+  { id: 1, judul: "Mahasiswa KKN Reguler ITS Mandala Jember Inovasikan Produk Olahan Jagung di Desa Grenden", tanggal: "20 Agustus 2025", dibaca: 298, gambar: kknJagung },
+  { id: 2, judul: "Produk Hasil Pangan Lokal KKN Reguler Grenden Hadirkan Camilan dan Sirup Bergizi", tanggal: "13 Agustus 2025", dibaca: 381, gambar: bantuanBeras },
+  { id: 3, judul: "Katalog Potensi Komoditas Pangan Desa Grenden oleh KKN Reguler ITS Mandala Jember Tahun 2026", tanggal: "4 Agustus 2025", dibaca: 565, gambar: tanamPohon },
 ];
 
 const GALERI_PREVIEW = [
@@ -137,6 +137,37 @@ export default function Beranda() {
         </div>
       </section>
 
+      {/* ── KKN BANNER ───────────────────────────────────────────── */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-5xl">
+          <FadeIn>
+            <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
+              <img
+                src="/foto/banner.png"
+                alt="KKN Reguler ITS Mandala Jember — Desa Grenden 2026"
+                className="w-full object-cover"
+              />
+            </div>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <div className="flex items-center gap-2 bg-white border border-border rounded-full px-5 py-2.5 shadow-sm">
+                <span className="text-lg">📸</span>
+                <a href="https://www.instagram.com/kkn_desagrendenpuger" target="_blank" rel="noopener noreferrer" className="font-semibold text-foreground hover:text-primary transition-colors text-sm">
+                  @kkn_desagrendenpuger
+                </a>
+                <span className="text-xs text-muted-foreground bg-pink-50 text-pink-600 px-2 py-0.5 rounded-full">Instagram</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-border rounded-full px-5 py-2.5 shadow-sm">
+                <span className="text-lg">🎵</span>
+                <a href="https://www.tiktok.com/@kkn_desagrendenpuger" target="_blank" rel="noopener noreferrer" className="font-semibold text-foreground hover:text-primary transition-colors text-sm">
+                  @kkn_desagrendenpuger
+                </a>
+                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">TikTok</span>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── PROFIL DESA ───────────────────────────────────────────── */}
       <section id="profil" className="py-20 px-4 bg-background">
         <div className="container mx-auto max-w-5xl">
@@ -234,6 +265,33 @@ export default function Beranda() {
               </div>
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* ── POTENSI DESA ──────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container mx-auto max-w-5xl">
+          <SectionTitle label="Keunggulan" title="Potensi Desa Grenden" desc="Desa Grenden dan Kecamatan Puger menyimpan kekayaan alam, budaya, dan potensi ekonomi yang khas dan beragam." />
+          <StaggerContainer>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {[
+                { icon: "🐟", judul: "Pelabuhan Perikanan Puger", isi: "Pelabuhan Perikanan Nusantara (PPN) Puger adalah salah satu pelabuhan perikanan terbesar di Jawa Timur. Komoditas unggulan: ikan tuna sirip kuning, tongkol, dan lemuru." },
+                { icon: "🌾", judul: "Pertanian & Perkebunan", isi: "Lahan pertanian produktif mengelilingi Desa Grenden. Komoditas utama padi, jagung, tebu, dan tembakau menjadi sumber penghidupan utama masyarakat." },
+                { icon: "🎭", judul: "Tari Perang Sadeng", isi: "Kesenian tradisional kebanggaan Grenden yang menggambarkan pertempuran Kerajaan Sadeng dan Majapahit — warisan budaya yang terus dilestarikan generasi ke generasi." },
+                { icon: "🏖️", judul: "Pantai Pancer", isi: "Pantai Pancer di Kecamatan Puger menjadi destinasi wisata alam dengan pemandangan laut selatan yang indah, dekat muara sungai khas kawasan pesisir Jember." },
+                { icon: "⚓", judul: "Pusat Kerajaan Sadeng", isi: "Puger merupakan pusat Kerajaan Sadeng, lumbung pangan Kerajaan Majapahit. Wilayah ini menyimpan sejarah panjang yang membentuk identitas budaya masyarakat hingga kini." },
+                { icon: "🤝", judul: "Gotong Royong & Komunitas", isi: "Masyarakat Desa Grenden terkenal dengan semangat gotong royong. Etnis Jawa dan Madura hidup harmonis bersama-sama membangun desa selama lebih dari satu abad." },
+              ].map((p, i) => (
+                <StaggerItem key={i}>
+                  <div className="bg-white border border-border rounded-2xl p-6 h-full shadow-sm hover:shadow-md transition-shadow">
+                    <div className="text-4xl mb-4">{p.icon}</div>
+                    <h4 className="font-bold text-foreground text-base mb-2">{p.judul}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{p.isi}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -341,7 +399,7 @@ export default function Beranda() {
       {/* ── ANGGOTA KKN ───────────────────────────────────────────── */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-5xl">
-          <SectionTitle label="Tim KKN" title="Anggota KKN Kolaboratif 018" desc="Mahasiswa yang bertugas melaksanakan program pengabdian di Desa Grenden tahun 2025." />
+          <SectionTitle label="Tim KKN" title="Anggota KKN Reguler ITS Mandala Jember" desc="Mahasiswa yang bertugas melaksanakan program pengabdian masyarakat di Desa Grenden tahun 2026." />
           {anggota.length === 0 ? (
             <FadeIn>
               <div className="text-center py-10 bg-white rounded-2xl border border-border">
@@ -415,6 +473,42 @@ export default function Beranda() {
                     </span>
                   </motion.div>
                 </Link>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── LOKASI & PETA ─────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container mx-auto max-w-5xl">
+          <SectionTitle label="Lokasi" title="Peta Desa Grenden" desc="Desa Grenden terletak di Kecamatan Puger, Kabupaten Jember, Jawa Timur — pesisir selatan yang kaya potensi." />
+          <FadeIn>
+            <div className="rounded-2xl overflow-hidden border border-border shadow-sm" style={{ height: 400 }}>
+              <iframe
+                src="https://maps.google.com/maps?q=Desa+Grenden+Puger+Jember+Jawa+Timur&output=embed&z=14"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Peta Desa Grenden"
+              />
+            </div>
+            <div className="mt-5 grid sm:grid-cols-3 gap-3">
+              {[
+                { icon: <MapPin className="w-4 h-4" />, label: "Alamat", val: "Jl. Raya Puger No.01, Dusun Krajan 1, RT 001/RW 015, Grenden, Puger, Jember 68164" },
+                { icon: <Map className="w-4 h-4" />, label: "Koordinat", val: "−8.3827° LS, 113.4276° BT" },
+                { icon: <Clock className="w-4 h-4" />, label: "Jarak", val: "5 km dari Kec. Puger · 37 km dari Kab. Jember" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-3 bg-muted/50 rounded-xl p-4">
+                  <div className="shrink-0 mt-0.5 text-primary">{item.icon}</div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{item.label}</p>
+                    <p className="text-foreground text-sm mt-0.5">{item.val}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </FadeIn>

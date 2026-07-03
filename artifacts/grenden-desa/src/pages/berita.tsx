@@ -8,35 +8,35 @@ export default function Berita() {
   const beritaList = [
     {
       id: 1,
-      judul: "Mahasiswa KKN Kolaboratif Kelompok 018 Inovasikan Produk Olahan Jagung di Desa Grenden",
+      judul: "Mahasiswa KKN Reguler ITS Mandala Jember Inovasikan Produk Olahan Jagung di Desa Grenden",
       tanggal: "20 Agustus 2025",
       dibaca: 298,
       gambar: kknJagung
     },
     {
       id: 2,
-      judul: "Produk Hasil Pangan Lokal KKN Kolaboratif 018 Grenden Hadirkan Camilan dan Sirup Bergizi",
+      judul: "Produk Hasil Pangan Lokal KKN Reguler ITS Mandala Jember Grenden Hadirkan Camilan dan Sirup Bergizi",
       tanggal: "13 Agustus 2025",
       dibaca: 381,
       gambar: "https://images.unsplash.com/photo-1605296830594-5cb16298dcba?auto=format&fit=crop&q=80&w=800"
     },
     {
       id: 3,
-      judul: "KATALOG POTENSI KOMODITAS PANGAN DI DESA GRENDEN OLEH KKN KOLABORATIF KELOMPOK 018 TAHUN 2025",
+      judul: "Katalog Potensi Komoditas Pangan Desa Grenden oleh KKN Reguler ITS Mandala Jember Tahun 2026",
       tanggal: "4 Agustus 2025",
       dibaca: 565,
       gambar: "https://images.unsplash.com/photo-1595183497121-69eb3bd6c57f?auto=format&fit=crop&q=80&w=800"
     },
     {
       id: 4,
-      judul: "Potret Potensi Dan Kesejahteraan Warga Oleh Mahasiswa KKN Kolaboratif 018 2025",
+      judul: "Potret Potensi Dan Kesejahteraan Warga Oleh Mahasiswa KKN Reguler ITS Mandala Jember 2026",
       tanggal: "4 Agustus 2025",
       dibaca: 719,
       gambar: kknPresentasi
     },
     {
       id: 5,
-      judul: "MAHASISWA KKN KOLABORATIF 018 IKUT SERTA DALAM PENYALURAN BANTUAN BERAS DI DESA GRENDEN",
+      judul: "Mahasiswa KKN Reguler ITS Mandala Jember Ikut Serta Dalam Penyaluran Bantuan Beras di Desa Grenden",
       tanggal: "28 Juli 2025",
       dibaca: 426,
       gambar: bantuanBeras

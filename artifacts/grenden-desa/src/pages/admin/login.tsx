@@ -37,7 +37,7 @@ export default function AdminLogin() {
               <Lock className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold font-serif text-foreground">Panel Admin</h1>
-            <p className="text-muted-foreground text-sm">KKN Kolaboratif 018 — Desa Grenden</p>
+            <p className="text-muted-foreground text-sm">KKN Reguler — Desa Grenden</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">

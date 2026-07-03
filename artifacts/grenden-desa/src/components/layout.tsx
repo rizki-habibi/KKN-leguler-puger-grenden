@@ -159,7 +159,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="pt-8 border-t border-white/20 text-center text-white/60 text-sm">
-            <p>&copy; {new Date().getFullYear()} Pemerintah Desa Grenden, Kabupaten Jember. Dibuat oleh Mahasiswa KKN Kolaboratif.</p>
+            <p>&copy; {new Date().getFullYear()} Pemerintah Desa Grenden, Kabupaten Jember. Dibuat oleh Mahasiswa KKN Reguler ITS Mandala Jember.</p>
           </div>
         </div>
       </footer>

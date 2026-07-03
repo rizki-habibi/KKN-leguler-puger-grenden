@@ -156,11 +156,11 @@ export default function AnggotaKkn() {
           <FadeIn>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium mb-6">
               <Users className="w-4 h-4" />
-              KKN Kolaboratif 018 — Desa Grenden 2025
+              KKN Reguler ITS Mandala Jember — Desa Grenden 2026
             </div>
             <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Anggota KKN</h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Tim mahasiswa KKN Kolaboratif Kelompok 018 yang bertugas di Desa Grenden, Kecamatan Puger, Kabupaten Jember.
+              Tim mahasiswa KKN Reguler ITS Mandala Jember yang bertugas di Desa Grenden, Kecamatan Puger, Kabupaten Jember.
             </p>
             {anggota.length > 0 && (
               <div className="mt-8 inline-flex items-center gap-2 bg-white/20 rounded-full px-5 py-2 text-sm font-semibold">
