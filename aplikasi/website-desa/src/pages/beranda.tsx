@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -8,7 +7,7 @@ import {
   Fish, Wheat, Music, Waves, Anchor, HeartHandshake,
 } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
-import { api, type AnggotaKkn } from "@/lib/api";
+import { ANGGOTA_KKN, type AnggotaKkn } from "@/data/anggota";
 import { Button } from "@/components/ui/button";
 import heroBanner from "@/assets/gambar/desa/foto-desa-utama.png";
 import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
@@ -60,11 +59,7 @@ function SectionTitle({ label, title, desc }: { label: string; title: string; de
 }
 
 export default function Beranda() {
-  const [anggota, setAnggota] = useState<AnggotaKkn[]>([]);
-
-  useEffect(() => {
-    api.anggota.list().then(setAnggota).catch(() => { });
-  }, []);
+  const anggota = ANGGOTA_KKN;
 
   return (
     <div className="flex flex-col">

@@ -43,6 +43,14 @@ export function AsistenAI() {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const adaApiKey = apiKey && apiKey !== "masukkan_api_key_gemini_disini";
 
+  // Cek apakah serverless proxy tersedia (Vercel deployment)
+  const [adaProxy, setAdaProxy] = useState<boolean | null>(null);
+  useEffect(() => {
+    fetch("/api/gemini", { method: "OPTIONS" })
+      .then((r) => setAdaProxy(r.ok || r.status === 200 || r.status === 405))
+      .catch(() => setAdaProxy(false));
+  }, []);
+
   useEffect(() => {
     refBawah.current?.scrollIntoView({ behavior: "smooth" });
   }, [pesan]);
@@ -67,16 +75,29 @@ export function AsistenAI() {
     setSedangMemuat(true);
 
     try {
-      if (!adaApiKey) {
-        // Mode demo tanpa API key
-        await new Promise((r) => setTimeout(r, 800));
-        const jawaban = dapatkanJawabanDemo(pesanBaru.isi);
+      if (adaProxy) {
+        // Panggil via Vercel serverless proxy (API key aman di server)
+        const riwayat = pesan
+          .slice(-6)
+          .map((p) => ({
+            role: p.dari === "pengguna" ? "user" : "model",
+            parts: [{ text: p.isi }],
+          }));
+
+        const response = await fetch("/api/gemini", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pesan: pesanBaru.isi, riwayat }),
+        });
+
+        if (!response.ok) throw new Error("Gagal menghubungi AI");
+        const data = await response.json();
         setPesan((prev) => [
           ...prev,
-          { dari: "ai", isi: jawaban, waktu: new Date() },
+          { dari: "ai", isi: data.teks, waktu: new Date() },
         ]);
-      } else {
-        // Panggil Gemini Flash API
+      } else if (adaApiKey) {
+        // Fallback: panggil Gemini langsung dari browser
         const riwayat = pesan
           .slice(-6)
           .map((p) => ({
@@ -106,15 +127,21 @@ export function AsistenAI() {
         );
 
         if (!response.ok) throw new Error("Gagal menghubungi AI");
-
         const data = await response.json();
         const teks =
           data?.candidates?.[0]?.content?.parts?.[0]?.text ||
           "Maaf, saya tidak dapat memproses pertanyaan Anda saat ini.";
-
         setPesan((prev) => [
           ...prev,
           { dari: "ai", isi: teks, waktu: new Date() },
+        ]);
+      } else {
+        // Mode demo tanpa API key
+        await new Promise((r) => setTimeout(r, 800));
+        const jawaban = dapatkanJawabanDemo(pesanBaru.isi);
+        setPesan((prev) => [
+          ...prev,
+          { dari: "ai", isi: jawaban, waktu: new Date() },
         ]);
       }
     } catch {
@@ -193,7 +220,7 @@ export function AsistenAI() {
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                     <span className="text-xs text-white/80">
-                      {adaApiKey ? "Gemini Flash Aktif" : "Mode Demo"}
+                      {adaProxy ? "Gemini Flash Aktif" : adaApiKey ? "Gemini Flash Aktif" : "Mode Demo"}
                     </span>
                   </div>
                 </div>
@@ -231,11 +258,10 @@ export function AsistenAI() {
                         </div>
                       )}
                       <div
-                        className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                          p.dari === "pengguna"
-                            ? "bg-primary text-white rounded-tr-sm"
-                            : "bg-white border border-border text-foreground rounded-tl-sm shadow-sm"
-                        }`}
+                        className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${p.dari === "pengguna"
+                          ? "bg-primary text-white rounded-tr-sm"
+                          : "bg-white border border-border text-foreground rounded-tl-sm shadow-sm"
+                          }`}
                       >
                         {p.isi}
                       </div>

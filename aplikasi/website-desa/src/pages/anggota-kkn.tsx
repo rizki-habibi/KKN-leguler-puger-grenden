@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Users, Briefcase, Star, ChevronDown, ChevronUp, GraduationCap, BookOpen } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
-import { api, type AnggotaKkn } from "@/lib/api";
+import { ANGGOTA_KKN, type AnggotaKkn } from "@/data/anggota";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 
@@ -141,16 +141,7 @@ function KartuAnggota({ a }: { a: AnggotaKkn }) {
 }
 
 export default function AnggotaKkn() {
-  const [anggota, setAnggota] = useState<AnggotaKkn[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    api.anggota.list()
-      .then(setAnggota)
-      .catch(() => setError("Gagal memuat data anggota"))
-      .finally(() => setLoading(false));
-  }, []);
+  const anggota = ANGGOTA_KKN;
 
   const dikelompokkan = DIVISI_ORDER.map((div) => ({
     divisi: div,
@@ -200,28 +191,6 @@ export default function AnggotaKkn() {
       {/* Konten */}
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl space-y-16">
-          {loading && (
-            <div className="text-center py-20 text-muted-foreground">Memuat data anggota...</div>
-          )}
-          {error && (
-            <div className="text-center py-20">
-              <p className="text-destructive mb-4">{error}</p>
-              <p className="text-sm text-muted-foreground">
-                Pastikan server API berjalan.{" "}
-                <Link href="/admin" className="text-primary hover:underline">Login ke admin</Link>
-                {" "}untuk mengelola anggota.
-              </p>
-            </div>
-          )}
-          {!loading && !error && anggota.length === 0 && (
-            <div className="text-center py-20 text-muted-foreground">
-              <Users className="w-12 h-12 mx-auto mb-3 opacity-30" />
-              <p>Belum ada data anggota.</p>
-              <Link href="/admin" className="text-primary hover:underline text-sm mt-2 inline-block">
-                Tambahkan melalui panel admin
-              </Link>
-            </div>
-          )}
           {dikelompokkan.map((grup, gi) => (
             <FadeIn key={grup.divisi} delay={gi * 0.08}>
               <div>
@@ -230,14 +199,13 @@ export default function AnggotaKkn() {
                   <h2 className="text-xl font-bold font-serif text-foreground whitespace-nowrap">{grup.divisi}</h2>
                   <div className="h-px flex-1 bg-border" />
                 </div>
-                <div className={`grid gap-5 ${
-                  grup.anggota.length === 1 ? "grid-cols-1 max-w-[220px] mx-auto" :
+                <div className={`grid gap-5 ${grup.anggota.length === 1 ? "grid-cols-1 max-w-[220px] mx-auto" :
                   grup.anggota.length === 2 ? "grid-cols-2 max-w-sm mx-auto" :
-                  grup.anggota.length === 3 ? "grid-cols-3 max-w-2xl mx-auto" :
-                  grup.anggota.length === 4 ? "grid-cols-2 sm:grid-cols-4" :
-                  grup.anggota.length === 5 ? "grid-cols-2 sm:grid-cols-5" :
-                  "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
-                }`}>
+                    grup.anggota.length === 3 ? "grid-cols-3 max-w-2xl mx-auto" :
+                      grup.anggota.length === 4 ? "grid-cols-2 sm:grid-cols-4" :
+                        grup.anggota.length === 5 ? "grid-cols-2 sm:grid-cols-5" :
+                          "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
+                  }`}>
                   {grup.anggota.map((a) => <KartuAnggota key={a.id} a={a} />)}
                 </div>
               </div>
