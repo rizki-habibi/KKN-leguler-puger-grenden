@@ -79,10 +79,22 @@ export interface KontenSosmed {
   updatedAt: string;
 }
 
+export interface BukuTamu {
+  id: number;
+  nama: string;
+  jabatanInstansi: string | null;
+  noTelepon: string | null;
+  keperluan: string | null;
+  tanggalKunjungan: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type AnggotaPayload = Omit<AnggotaKkn, "id" | "createdAt" | "updatedAt">;
 export type BeritaPayload = Omit<Berita, "id" | "createdAt" | "updatedAt">;
 export type GaleriPayload = Omit<Galeri, "id" | "createdAt" | "updatedAt">;
 export type KontenSosmedPayload = Omit<KontenSosmed, "id" | "createdAt" | "updatedAt">;
+export type BukuTamuPayload = Omit<BukuTamu, "id" | "createdAt" | "updatedAt">;
 
 /* ── API client ─────────────────────────────────────────────── */
 export const api = {
@@ -140,5 +152,16 @@ export const api = {
     logout: () => { localStorage.removeItem("admin_token"); },
     isLoggedIn: () => !!getToken(),
     saveToken: (token: string) => localStorage.setItem("admin_token", token),
+  },
+
+  bukuTamu: {
+    list: () => fetch(`${BASE}/buku-tamu`).then((r) => handleResponse<BukuTamu[]>(r)),
+    get: (id: number) => fetch(`${BASE}/buku-tamu/${id}`).then((r) => handleResponse<BukuTamu>(r)),
+    create: (data: BukuTamuPayload) =>
+      fetch(`${BASE}/buku-tamu`, { method: "POST", headers: authHeaders(), body: JSON.stringify(data) }).then((r) => handleResponse<BukuTamu>(r)),
+    update: (id: number, data: Partial<BukuTamuPayload>) =>
+      fetch(`${BASE}/buku-tamu/${id}`, { method: "PUT", headers: authHeaders(), body: JSON.stringify(data) }).then((r) => handleResponse<BukuTamu>(r)),
+    delete: (id: number) =>
+      fetch(`${BASE}/buku-tamu/${id}`, { method: "DELETE", headers: authHeaders() }).then((r) => handleResponse<{ message: string }>(r)),
   },
 };

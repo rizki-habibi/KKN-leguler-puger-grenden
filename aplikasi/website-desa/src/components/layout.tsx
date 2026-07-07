@@ -29,9 +29,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { name: "Visi Misi", path: "/visi-misi" },
     { name: "Berita", path: "/berita" },
     { name: "Galeri", path: "/galeri" },
+    { name: "Kegiatan", path: "/kegiatan" },
+    { name: "Proker", path: "/proker" },
     { name: "PPID", path: "/ppid" },
     { name: "Anggota KKN", path: "/anggota-kkn" },
     { name: "Konten Sosmed", path: "/konten-sosmed" },
+    { name: "Buku Tamu", path: "/buku-tamu" },
   ];
 
   return (

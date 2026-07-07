@@ -13,6 +13,9 @@ import Galeri from "@/pages/galeri";
 import Ppid from "@/pages/ppid";
 import AnggotaKkn from "@/pages/anggota-kkn";
 import KontenSosmed from "@/pages/konten-sosmed";
+import ProkerPage from "@/pages/proker";
+import KegiatanPage from "@/pages/kegiatan";
+import BukuTamuPage from "@/pages/buku-tamu";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import NotFound from "@/pages/not-found";
@@ -40,6 +43,9 @@ function Router() {
       <Route path="/ppid" component={() => <PublicPage component={Ppid} />} />
       <Route path="/anggota-kkn" component={() => <PublicPage component={AnggotaKkn} />} />
       <Route path="/konten-sosmed" component={() => <PublicPage component={KontenSosmed} />} />
+      <Route path="/proker" component={() => <PublicPage component={ProkerPage} />} />
+      <Route path="/kegiatan" component={() => <PublicPage component={KegiatanPage} />} />
+      <Route path="/buku-tamu" component={() => <PublicPage component={BukuTamuPage} />} />
       <Route component={() => <PublicPage component={NotFound} />} />
     </Switch>
   );
