@@ -232,6 +232,61 @@ npx vite --port 3000
 
 ---
 
+## 🗄️ Database Schema
+
+| Tabel | Deskripsi |
+|-------|-----------|
+| `anggota_kkn` | Data 10 anggota KKN (nama, jabatan, divisi, NIM, foto, bio) |
+| `berita` | Berita & artikel desa (judul, slug, isi, kategori, status publish) |
+| `galeri` | Foto dokumentasi kegiatan (judul, gambar, kategori, urutan) |
+| `konten_sosmed` | Konten Instagram & TikTok KKN (judul, platform, url, tanggal) |
+| `buku_tamu` | Catatan kunjungan tamu (nama, jabatan, keperluan, tanggal) |
+
+Setup database (jalankan sekali):
+```bash
+mysql -u root -h 127.0.0.1 -P 3306 < skrip/setup-db.sql
+```
+
+---
+
+## 🔌 API Endpoints
+
+> Base URL: `http://localhost:5000/api`
+
+| Method | Endpoint | Akses | Keterangan |
+|--------|----------|-------|------------|
+| GET | `/health` | Publik | Cek status server |
+| POST | `/auth/login` | Publik | Login admin, return token |
+| GET | `/auth/me` | Bearer token | Cek status login |
+| GET | `/anggota` | Publik | Daftar semua anggota KKN |
+| GET | `/anggota/:id` | Publik | Detail satu anggota |
+| POST | `/anggota` | Admin | Tambah anggota |
+| PUT | `/anggota/:id` | Admin | Edit anggota |
+| DELETE | `/anggota/:id` | Admin | Hapus anggota |
+| GET | `/berita` | Publik / Admin | Daftar berita (publik: hanya terbit) |
+| GET | `/berita/:id` | Publik | Detail berita |
+| POST | `/berita` | Admin | Tambah berita |
+| PUT | `/berita/:id` | Admin | Edit berita |
+| DELETE | `/berita/:id` | Admin | Hapus berita |
+| GET | `/galeri` | Publik | Daftar foto galeri |
+| POST | `/galeri` | Admin | Tambah foto |
+| PUT | `/galeri/:id` | Admin | Edit foto |
+| DELETE | `/galeri/:id` | Admin | Hapus foto |
+| GET | `/konten-sosmed` | Publik | Daftar konten media sosial |
+| POST | `/konten-sosmed` | Admin | Tambah konten |
+| PUT | `/konten-sosmed/:id` | Admin | Edit konten |
+| DELETE | `/konten-sosmed/:id` | Admin | Hapus konten |
+| GET | `/buku-tamu` | Publik | Daftar kunjungan tamu |
+| POST | `/buku-tamu` | Header `x-humas-pin` | Tambah data tamu |
+| PUT | `/buku-tamu/:id` | Header `x-humas-pin` | Edit data tamu |
+| DELETE | `/buku-tamu/:id` | Header `x-humas-pin` | Hapus data tamu |
+
+**Autentikasi Admin:** kirim header `Authorization: Bearer <token>` (token didapat dari `POST /api/auth/login`).
+
+**Autentikasi Humas (Buku Tamu):** kirim header `x-humas-pin: <pin>` — PIN diatur via env `HUMAS_PIN` (default: `humas2026`).
+
+---
+
 ## 🛠️ Tech Stack
 
 | Komponen | Teknologi |

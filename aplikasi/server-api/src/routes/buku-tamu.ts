@@ -2,7 +2,7 @@ import { Router, type IRouter } from "express";
 import { eq, desc } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { bukuTamuTable, insertBukuTamuSchema, updateBukuTamuSchema } from "@workspace/db";
-import { adminAuth } from "../middlewares/auth.js";
+import { humasAuth } from "../middlewares/auth.js";
 
 const router: IRouter = Router();
 
@@ -20,7 +20,7 @@ router.get("/buku-tamu", async (req, res) => {
   }
 });
 
-// GET satu tamu by id
+// GET satu tamu by id (publik)
 router.get("/buku-tamu/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -34,8 +34,8 @@ router.get("/buku-tamu/:id", async (req, res) => {
   }
 });
 
-// POST tambah tamu — dilindungi PIN humas (via adminAuth)
-router.post("/buku-tamu", adminAuth, async (req, res) => {
+// POST tambah tamu — dilindungi PIN humas
+router.post("/buku-tamu", humasAuth, async (req, res) => {
   try {
     const parsed = insertBukuTamuSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -51,8 +51,8 @@ router.post("/buku-tamu", adminAuth, async (req, res) => {
   }
 });
 
-// PUT update tamu (admin)
-router.put("/buku-tamu/:id", adminAuth, async (req, res) => {
+// PUT update tamu — dilindungi PIN humas
+router.put("/buku-tamu/:id", humasAuth, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) { res.status(400).json({ message: "ID tidak valid" }); return; }
@@ -71,8 +71,8 @@ router.put("/buku-tamu/:id", adminAuth, async (req, res) => {
   }
 });
 
-// DELETE tamu (admin)
-router.delete("/buku-tamu/:id", adminAuth, async (req, res) => {
+// DELETE tamu — dilindungi PIN humas
+router.delete("/buku-tamu/:id", humasAuth, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) { res.status(400).json({ message: "ID tidak valid" }); return; }

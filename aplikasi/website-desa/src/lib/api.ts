@@ -155,13 +155,26 @@ export const api = {
   },
 
   bukuTamu: {
-    list: () => fetch(`${BASE}/buku-tamu`).then((r) => handleResponse<BukuTamu[]>(r)),
-    get: (id: number) => fetch(`${BASE}/buku-tamu/${id}`).then((r) => handleResponse<BukuTamu>(r)),
-    create: (data: BukuTamuPayload) =>
-      fetch(`${BASE}/buku-tamu`, { method: "POST", headers: authHeaders(), body: JSON.stringify(data) }).then((r) => handleResponse<BukuTamu>(r)),
-    update: (id: number, data: Partial<BukuTamuPayload>) =>
-      fetch(`${BASE}/buku-tamu/${id}`, { method: "PUT", headers: authHeaders(), body: JSON.stringify(data) }).then((r) => handleResponse<BukuTamu>(r)),
-    delete: (id: number) =>
-      fetch(`${BASE}/buku-tamu/${id}`, { method: "DELETE", headers: authHeaders() }).then((r) => handleResponse<{ message: string }>(r)),
+    list: () =>
+      fetch(`${BASE}/buku-tamu`).then((r) => handleResponse<BukuTamu[]>(r)),
+    get: (id: number) =>
+      fetch(`${BASE}/buku-tamu/${id}`).then((r) => handleResponse<BukuTamu>(r)),
+    create: (data: BukuTamuPayload, pin: string) =>
+      fetch(`${BASE}/buku-tamu`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-humas-pin": pin },
+        body: JSON.stringify(data),
+      }).then((r) => handleResponse<BukuTamu>(r)),
+    update: (id: number, data: Partial<BukuTamuPayload>, pin: string) =>
+      fetch(`${BASE}/buku-tamu/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "x-humas-pin": pin },
+        body: JSON.stringify(data),
+      }).then((r) => handleResponse<BukuTamu>(r)),
+    delete: (id: number, pin: string) =>
+      fetch(`${BASE}/buku-tamu/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "x-humas-pin": pin },
+      }).then((r) => handleResponse<{ message: string }>(r)),
   },
 };

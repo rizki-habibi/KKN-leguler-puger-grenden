@@ -100,3 +100,16 @@ INSERT INTO `berita` (`judul`, `slug`, `ringkasan`, `isi`, `kategori`, `diterbit
 ('KKN ITS Mandala Jember Resmi Bertugas di Desa Grenden', 'kkn-its-resmi-bertugas-grenden', 'Tim KKN Reguler ITS Mandala Jember 2026 resmi diserahkan dan mulai bertugas di Desa Grenden, Kecamatan Puger, Kabupaten Jember.', 'Tim KKN Reguler ITS Mandala Jember 2026 yang terdiri dari 10 mahasiswa dari berbagai program studi resmi diserahkan kepada pemerintah Desa Grenden. Penyerahan dilakukan oleh Dosen Pembimbing Lapangan, Bapak Faizal Abrolillah, S.Kom., M.Kom. Tim ini akan bertugas selama periode KKN untuk melaksanakan berbagai program pengabdian masyarakat.', 'KKN', 1),
 ('Inovasi Produk Olahan Jagung Tingkatkan Nilai Ekonomi Warga', 'inovasi-olahan-jagung-grenden', 'Mahasiswa KKN berkolaborasi dengan ibu-ibu PKK Desa Grenden untuk mengembangkan inovasi produk olahan jagung bernilai ekonomi tinggi.', 'Dalam rangka meningkatkan nilai ekonomi hasil pertanian lokal, tim KKN ITS bersama ibu-ibu PKK Desa Grenden mengadakan pelatihan pengolahan jagung menjadi berbagai produk pangan. Kegiatan ini merupakan bagian dari program pemberdayaan masyarakat berbasis Technopreneurship.', 'Pertanian', 1),
 ('Gotong Royong Pembersihan Lingkungan Desa Grenden', 'gotong-royong-grenden-2026', 'Mahasiswa KKN bersama warga Desa Grenden menggelar kegiatan gotong royong membersihkan lingkungan desa.', 'Kegiatan gotong royong dilaksanakan di seluruh dusun Desa Grenden dengan melibatkan mahasiswa KKN dan warga setempat. Kegiatan ini bertujuan untuk menjaga kebersihan dan keindahan desa sesuai dengan visi Grenden Bersih.', 'Sosial', 1);
+
+-- ─── Tabel Buku Tamu ─────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS `buku_tamu` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) NOT NULL,
+  `jabatan_instansi` varchar(255) DEFAULT NULL,
+  `no_telepon` varchar(50) DEFAULT NULL,
+  `keperluan` text DEFAULT NULL,
+  `tanggal_kunjungan` date NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

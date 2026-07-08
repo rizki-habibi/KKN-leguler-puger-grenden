@@ -44,6 +44,7 @@ export default function BukuTamuPage() {
   const [daftarTamu, setDaftarTamu] = useState<BukuTamu[]>([]);
   const [loading, setLoading] = useState(true);
   const [humasMode, setHumasMode] = useState(false);
+  const [humasPin, setHumasPin] = useState(""); // PIN tersimpan setelah verified
   const [showPinModal, setShowPinModal] = useState(false);
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState("");
@@ -78,6 +79,7 @@ export default function BukuTamuPage() {
   function verifikasiPin() {
     if (pin === HUMAS_PIN) {
       setHumasMode(true);
+      setHumasPin(pin); // simpan PIN untuk request berikutnya
       setShowPinModal(false);
       setPinError("");
     } else {
@@ -87,6 +89,7 @@ export default function BukuTamuPage() {
 
   function keluarHumas() {
     setHumasMode(false);
+    setHumasPin("");
     setShowForm(false);
     setForm(FORM_KOSONG);
     setSubmitOk(false);
@@ -109,7 +112,7 @@ export default function BukuTamuPage() {
         noTelepon: form.noTelepon.trim() || null,
         keperluan: form.keperluan.trim() || null,
         tanggalKunjungan: form.tanggalKunjungan,
-      });
+      }, humasPin);
       setSubmitOk(true);
       setForm(FORM_KOSONG);
       setShowForm(false);
@@ -124,7 +127,7 @@ export default function BukuTamuPage() {
   // ── Hapus tamu ───────────────────────────────────────────────
   async function hapusTamu(id: number) {
     try {
-      await api.bukuTamu.delete(id);
+      await api.bukuTamu.delete(id, humasPin);
       setDaftarTamu((prev) => prev.filter((t) => t.id !== id));
     } catch {
       // silent
