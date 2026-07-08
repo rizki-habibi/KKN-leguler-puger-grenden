@@ -3,13 +3,6 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
 import { Calendar, ArrowRight, Newspaper, Tag } from "lucide-react";
 import { api, type Berita } from "@/lib/api";
 
-// Fallback data statis kalau backend tidak tersedia
-const BERITA_STATIS: Berita[] = [
-  { id: 1, judul: "KKN ITS Mandala Jember Resmi Bertugas di Desa Grenden", slug: "kkn-its-resmi-bertugas", ringkasan: "Tim KKN Reguler ITS Mandala Jember 2026 resmi diserahkan dan mulai bertugas di Desa Grenden.", isi: null, gambarUrl: "/gambar/kegiatan/kkn-presentasi.png", kategori: "KKN", diterbitkan: true, createdAt: "2026-07-01T00:00:00.000Z", updatedAt: "2026-07-01T00:00:00.000Z" },
-  { id: 2, judul: "Inovasi Produk Olahan Jagung Tingkatkan Nilai Ekonomi Warga", slug: "inovasi-olahan-jagung", ringkasan: "Mahasiswa KKN berkolaborasi dengan ibu-ibu PKK untuk mengembangkan produk olahan jagung bernilai ekonomi tinggi.", isi: null, gambarUrl: "/gambar/kegiatan/kkn-jagung.png", kategori: "Pertanian", diterbitkan: true, createdAt: "2026-07-02T00:00:00.000Z", updatedAt: "2026-07-02T00:00:00.000Z" },
-  { id: 3, judul: "Gotong Royong Pembersihan Lingkungan Desa Grenden", slug: "gotong-royong-2026", ringkasan: "Mahasiswa KKN bersama warga Desa Grenden menggelar kegiatan gotong royong membersihkan lingkungan.", isi: null, gambarUrl: "/gambar/kegiatan/gotong-royong.png", kategori: "Sosial", diterbitkan: true, createdAt: "2026-07-03T00:00:00.000Z", updatedAt: "2026-07-03T00:00:00.000Z" },
-];
-
 const WARNA_KATEGORI: Record<string, string> = {
   KKN: "bg-green-100 text-green-700",
   Pertanian: "bg-amber-100 text-amber-700",
@@ -20,14 +13,14 @@ const WARNA_KATEGORI: Record<string, string> = {
 };
 
 export default function Berita() {
-  const [beritaList, setBeritaList] = useState<Berita[]>(BERITA_STATIS);
+  const [beritaList, setBeritaList] = useState<Berita[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("Semua");
 
   useEffect(() => {
     api.berita.list(false)
-      .then((data) => { if (data.length > 0) setBeritaList(data); })
-      .catch(() => { /* pakai data statis */ })
+      .then((data) => setBeritaList(data))
+      .catch(() => setBeritaList([]))
       .finally(() => setLoading(false));
   }, []);
 

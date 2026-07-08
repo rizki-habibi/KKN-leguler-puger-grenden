@@ -4,8 +4,6 @@ import { ExternalLink, Instagram, Youtube, Link as LinkIcon } from "lucide-react
 import { FadeIn } from "@/components/fade-in";
 import { api, type KontenSosmed } from "@/lib/api";
 
-type Platform = "Instagram" | "TikTok" | "YouTube" | "Facebook" | "Twitter/X" | "Lainnya";
-
 const PLATFORM_STYLE: Record<string, { color: string; icon: React.ReactNode }> = {
   Instagram: { color: "bg-gradient-to-r from-purple-500 to-pink-500 text-white", icon: <Instagram className="w-4 h-4" /> },
   TikTok: { color: "bg-gray-900 text-white", icon: <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.78a4.85 4.85 0 01-1.07-.09z" /></svg> },
@@ -15,23 +13,17 @@ const PLATFORM_STYLE: Record<string, { color: string; icon: React.ReactNode }> =
   Lainnya: { color: "bg-gray-600 text-white", icon: <LinkIcon className="w-4 h-4" /> },
 };
 
-const KONTEN_STATIS: KontenSosmed[] = [
-  { id: 1, judul: "Observasi Awal dan Penentuan Perlengkapan KKN", platform: "Instagram", url: "https://www.instagram.com/kkn_desagrendenpuger", deskripsi: "Tim melakukan observasi awal Desa Grenden.", tanggal: "2026-07-01", urutan: 1, createdAt: "", updatedAt: "" },
-  { id: 2, judul: "Perkenalan Tim KKN Reguler di Desa Grenden", platform: "Instagram", url: "https://www.instagram.com/kkn_desagrendenpuger", deskripsi: "Tim KKN resmi memperkenalkan diri kepada warga Desa Grenden.", tanggal: "2026-07-01", urutan: 2, createdAt: "", updatedAt: "" },
-  { id: 3, judul: "Penyerahan Mahasiswa KKN ke Desa Grenden", platform: "TikTok", url: "https://www.tiktok.com/@kkn_desagrendenpuger", deskripsi: "Momen penyerahan resmi mahasiswa KKN oleh DPL.", tanggal: "2026-07-01", urutan: 3, createdAt: "", updatedAt: "" },
-  { id: 4, judul: "Inovasi Produk Olahan Jagung Bersama PKK", platform: "Instagram", url: "https://www.instagram.com/kkn_desagrendenpuger", deskripsi: "Dokumentasi inovasi produk olahan jagung bersama PKK.", tanggal: "2026-07-03", urutan: 4, createdAt: "", updatedAt: "" },
-  { id: 5, judul: "Vlog Penyaluran Bantuan Beras kepada Warga", platform: "TikTok", url: "https://www.tiktok.com/@kkn_desagrendenpuger", deskripsi: "Video dokumentasi penyaluran bantuan beras.", tanggal: "2026-07-02", urutan: 5, createdAt: "", updatedAt: "" },
-];
+type Platform = "Instagram" | "TikTok" | "YouTube" | "Facebook" | "Twitter/X" | "Lainnya";
 
 export default function KontenSosmed() {
-  const [daftarKonten, setDaftarKonten] = useState<KontenSosmed[]>(KONTEN_STATIS);
+  const [daftarKonten, setDaftarKonten] = useState<KontenSosmed[]>([]);
   const [filterPlatform, setFilterPlatform] = useState<string>("Semua");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.kontenSosmed.list()
-      .then((data) => { if (data.length > 0) setDaftarKonten(data); })
-      .catch(() => { /* pakai data statis */ })
+      .then((data) => setDaftarKonten(data))
+      .catch(() => setDaftarKonten([]))
       .finally(() => setLoading(false));
   }, []);
 

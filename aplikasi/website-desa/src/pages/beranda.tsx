@@ -1,30 +1,23 @@
 import { Link } from "wouter";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Users, Map, Clock, Building, MapPin,
-  Phone, Mail, Globe, BookOpen, Eye, Camera, Newspaper,
-  Link as LinkIcon, ShieldCheck, ChevronRight, Bot, Sparkles,
-  Fish, Wheat, Music, Waves, Anchor, HeartHandshake, GraduationCap, Award,
+  Phone, Mail, Globe, BookOpen, Camera, Newspaper,
+  Link as LinkIcon, ShieldCheck, ChevronRight, GraduationCap, Award,
 } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/fade-in";
 import { ANGGOTA_KKN, DATA_DPL, type AnggotaKkn } from "@/data/anggota";
 import { Button } from "@/components/ui/button";
+import { api, type Berita } from "@/lib/api";
 import heroBanner from "@/assets/gambar/desa/foto-desa-utama.png";
-import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
-import bantuanBeras from "@/assets/gambar/kegiatan/bantuan-beras.png";
-import tanamPohon from "@/assets/gambar/kegiatan/tanam-pohon.png";
 import gotongRoyong from "@/assets/gambar/kegiatan/gotong-royong.png";
 import sawahHijau from "@/assets/gambar/desa/sawah-hijau.png";
 import kknPresentasi from "@/assets/gambar/kegiatan/kkn-presentasi.png";
 import balaiDesa from "@/assets/gambar/desa/balai-desa.png";
 import tariTradisional from "@/assets/gambar/kegiatan/tari-tradisional.png";
+import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
 import bannerKkn from "@/assets/gambar/banner/banner-kkn-grenden.png";
-
-const BERITA = [
-  { id: 1, judul: "Mahasiswa KKN Reguler ITS Mandala Jember Inovasikan Produk Olahan Jagung di Desa Grenden", tanggal: "20 Agustus 2025", dibaca: 298, gambar: kknJagung },
-  { id: 2, judul: "Produk Hasil Pangan Lokal KKN Reguler Grenden Hadirkan Camilan dan Sirup Bergizi", tanggal: "13 Agustus 2025", dibaca: 381, gambar: bantuanBeras },
-  { id: 3, judul: "Katalog Potensi Komoditas Pangan Desa Grenden oleh KKN Reguler ITS Mandala Jember Tahun 2026", tanggal: "4 Agustus 2025", dibaca: 565, gambar: tanamPohon },
-];
 
 const GALERI_PREVIEW = [
   { src: sawahHijau, alt: "Pemandangan sawah hijau Desa Grenden", size: "col-span-2 row-span-2" },
@@ -60,6 +53,18 @@ function SectionTitle({ label, title, desc }: { label: string; title: string; de
 
 export default function Beranda() {
   const anggota = ANGGOTA_KKN;
+  const [beritaList, setBeritaList] = useState<Berita[]>([]);
+  const [beritaLoading, setBeritaLoading] = useState(true);
+
+  useEffect(() => {
+    api.berita.list(false)
+      .then((data) => setBeritaList(data.slice(0, 3)))
+      .catch(() => setBeritaList([]))
+      .finally(() => setBeritaLoading(false));
+  }, []);
+
+  const formatTgl = (d: string) =>
+    new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 
   return (
     <div className="flex flex-col">
@@ -334,32 +339,59 @@ export default function Beranda() {
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-5xl">
           <SectionTitle label="Berita" title="Berita & Kegiatan Terbaru" />
-          <StaggerContainer>
+          {beritaLoading ? (
             <div className="grid md:grid-cols-3 gap-6">
-              {BERITA.map((b) => (
-                <StaggerItem key={b.id}>
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                    className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm"
-                    data-testid={`card-berita-${b.id}`}
-                  >
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img src={b.gambar} alt={b.judul} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <div className="p-5 space-y-2">
-                      <span className="text-xs text-muted-foreground">{b.tanggal}</span>
-                      <h4 className="font-bold text-foreground line-clamp-3 leading-snug text-sm">{b.judul}</h4>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Eye className="w-3.5 h-3.5" />
-                        {b.dibaca.toLocaleString("id-ID")} kali dibaca
-                      </div>
-                    </div>
-                  </motion.div>
-                </StaggerItem>
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="rounded-2xl border bg-muted animate-pulse h-64" />
               ))}
             </div>
-          </StaggerContainer>
+          ) : beritaList.length === 0 ? (
+            <FadeIn>
+              <div className="text-center py-16 bg-white rounded-2xl border border-border">
+                <Newspaper className="w-12 h-12 mx-auto mb-3 text-muted-foreground opacity-30" />
+                <p className="text-muted-foreground text-sm">Belum ada berita. Tambahkan melalui panel admin.</p>
+                <Link href="/admin" className="text-primary hover:underline text-sm mt-2 inline-block font-medium">
+                  Login ke panel admin
+                </Link>
+              </div>
+            </FadeIn>
+          ) : (
+            <StaggerContainer>
+              <div className="grid md:grid-cols-3 gap-6">
+                {beritaList.map((b) => (
+                  <StaggerItem key={b.id}>
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                      className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm"
+                    >
+                      <div className="aspect-[16/10] overflow-hidden bg-muted">
+                        {b.gambarUrl ? (
+                          <img
+                            src={b.gambarUrl}
+                            alt={b.judul}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            onError={(e) => (e.currentTarget.style.display = "none")}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Newspaper className="w-10 h-10 text-muted-foreground/20" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-5 space-y-2">
+                        <span className="text-xs text-muted-foreground">{formatTgl(b.createdAt)}</span>
+                        <h4 className="font-bold text-foreground line-clamp-3 leading-snug text-sm">{b.judul}</h4>
+                        {b.ringkasan && (
+                          <p className="text-xs text-muted-foreground line-clamp-2">{b.ringkasan}</p>
+                        )}
+                      </div>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </div>
+            </StaggerContainer>
+          )}
           <FadeIn delay={0.2}>
             <div className="text-center mt-10">
               <Button asChild variant="outline" className="rounded-full">

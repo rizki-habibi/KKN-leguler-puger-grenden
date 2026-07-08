@@ -218,9 +218,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-serif font-bold text-xl group-hover:scale-105 transition-transform">
-              G
-            </div>
+            <img
+              src="/logo-kkn.jpeg"
+              alt="Logo KKN Desa Grenden"
+              className="w-10 h-10 rounded-full object-cover group-hover:scale-105 transition-transform shadow-sm border border-border"
+            />
             <div>
               <h1 className="font-serif font-bold text-xl text-primary leading-tight">Desa Grenden</h1>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
@@ -300,9 +302,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white font-serif font-bold text-2xl">
-                  G
-                </div>
+                <img
+                  src="/logo-kkn.jpeg"
+                  alt="Logo KKN Desa Grenden"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-white/20 shadow-md"
+                />
                 <div>
                   <h2 className="font-serif font-bold text-2xl text-white">Desa Grenden</h2>
                   <p className="text-xs uppercase tracking-wider text-white/70">Kec. Puger, Kab. Jember</p>

@@ -3,37 +3,16 @@ import { StaggerContainer, StaggerItem, FadeIn } from "@/components/fade-in";
 import { Camera } from "lucide-react";
 import { api, type Galeri } from "@/lib/api";
 
-// Fallback gambar lokal
-import kknJagung from "@/assets/gambar/kegiatan/kkn-jagung.png";
-import bantuanBeras from "@/assets/gambar/kegiatan/bantuan-beras.png";
-import tanamPohon from "@/assets/gambar/kegiatan/tanam-pohon.png";
-import gotongRoyong from "@/assets/gambar/kegiatan/gotong-royong.png";
-import sawahHijau from "@/assets/gambar/desa/sawah-hijau.png";
-import kknPresentasi from "@/assets/gambar/kegiatan/kkn-presentasi.png";
-import balaiDesa from "@/assets/gambar/desa/balai-desa.png";
-import tariTradisional from "@/assets/gambar/kegiatan/tari-tradisional.png";
-
-const GALERI_STATIS: Galeri[] = [
-  { id: 1, judul: "Sawah Hijau Desa Grenden", deskripsi: "Pemandangan sawah hijau di desa pesisir Jember", gambarUrl: sawahHijau, kategori: "Alam", urutan: 1, createdAt: "", updatedAt: "" },
-  { id: 2, judul: "Inovasi Olahan Jagung", deskripsi: "Mahasiswa KKN mengolah jagung bersama ibu-ibu PKK", gambarUrl: kknJagung, kategori: "Program", urutan: 2, createdAt: "", updatedAt: "" },
-  { id: 3, judul: "Balai Desa Grenden", deskripsi: "Suasana balai desa", gambarUrl: balaiDesa, kategori: "Desa", urutan: 3, createdAt: "", updatedAt: "" },
-  { id: 4, judul: "Tari Perang Sadeng", deskripsi: "Pertunjukan tari tradisional khas Grenden", gambarUrl: tariTradisional, kategori: "Budaya", urutan: 4, createdAt: "", updatedAt: "" },
-  { id: 5, judul: "Bantuan Beras", deskripsi: "Penyaluran bantuan beras kepada warga", gambarUrl: bantuanBeras, kategori: "Sosial", urutan: 5, createdAt: "", updatedAt: "" },
-  { id: 6, judul: "Gotong Royong", deskripsi: "Kegiatan gotong royong bersama warga", gambarUrl: gotongRoyong, kategori: "Kegiatan", urutan: 6, createdAt: "", updatedAt: "" },
-  { id: 7, judul: "Presentasi Program KKN", deskripsi: "Presentasi kepada perangkat desa", gambarUrl: kknPresentasi, kategori: "Program", urutan: 7, createdAt: "", updatedAt: "" },
-  { id: 8, judul: "Tanam Pohon", deskripsi: "Program penghijauan bersama warga", gambarUrl: tanamPohon, kategori: "Program", urutan: 8, createdAt: "", updatedAt: "" },
-];
-
 export default function GaleriPage() {
-  const [galeriList, setGaleriList] = useState<Galeri[]>(GALERI_STATIS);
+  const [galeriList, setGaleriList] = useState<Galeri[]>([]);
   const [filter, setFilter] = useState("Semua");
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Galeri | null>(null);
 
   useEffect(() => {
     api.galeri.list()
-      .then((data) => { if (data.length > 0) setGaleriList(data); })
-      .catch(() => { /* pakai data statis */ })
+      .then((data) => setGaleriList(data))
+      .catch(() => setGaleriList([]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -82,6 +61,16 @@ export default function GaleriPage() {
                 <div key={i} className="break-inside-avoid rounded-2xl bg-muted animate-pulse h-48 mb-6" />
               ))}
             </div>
+          ) : galeriTampil.length === 0 ? (
+            <FadeIn>
+              <div className="text-center py-24 text-muted-foreground">
+                <Camera className="w-12 h-12 mx-auto mb-4 opacity-20" />
+                <p className="text-lg font-medium">Belum ada foto galeri</p>
+                <a href="/admin" className="text-primary hover:underline text-sm mt-2 inline-block font-medium">
+                  Tambahkan melalui panel admin
+                </a>
+              </div>
+            </FadeIn>
           ) : (
             <StaggerContainer className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
               {galeriTampil.map((g) => (
