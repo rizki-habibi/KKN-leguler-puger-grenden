@@ -145,8 +145,8 @@ export default function KegiatanPage() {
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Calendar className="w-8 h-8 text-accent" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Kegiatan KKN</h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Kegiatan KKN</h1>
+            <p className="text-xl text-white/90 leading-relaxed">
               Dokumentasi seluruh kegiatan Tim KKN Reguler ITS Mandala Jember di Desa Grenden,
               Kecamatan Puger, Kabupaten Jember.
             </p>
@@ -169,11 +169,10 @@ export default function KegiatanPage() {
             <button
               key={k}
               onClick={() => setFilter(k)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                filter === k
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors border ${filter === k
                   ? "bg-primary text-white border-primary"
                   : "bg-muted text-muted-foreground border-transparent hover:border-border"
-              }`}
+                }`}
             >
               {k}{" "}
               <span className="opacity-70">

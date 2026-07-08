@@ -39,8 +39,8 @@ export default function Berita() {
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Newspaper className="w-8 h-8 text-accent" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Berita Desa</h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Berita Desa</h1>
+            <p className="text-xl text-white/90 leading-relaxed">
               Kabar terbaru, pengumuman, dan dokumentasi kegiatan pembangunan Desa Grenden.
             </p>
           </FadeIn>

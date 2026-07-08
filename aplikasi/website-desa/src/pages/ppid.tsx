@@ -11,8 +11,8 @@ export default function Ppid() {
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <ShieldCheck className="w-8 h-8 text-accent" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-6">PPID Desa Grenden</h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-6 text-yellow-300">PPID Desa Grenden</h1>
+            <p className="text-xl text-white/90 leading-relaxed">
               Pejabat Pengelola Informasi dan Dokumentasi. Wujud nyata keterbukaan dan transparansi publik.
             </p>
           </FadeIn>
@@ -23,13 +23,13 @@ export default function Ppid() {
       <section className="py-20">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <div className="space-y-12">
-            
+
             <FadeIn>
               <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm">
                 <h2 className="text-2xl md:text-3xl font-bold font-serif mb-8 text-foreground border-b pb-4">
                   PPID Utama Desa
                 </h2>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
@@ -64,9 +64,9 @@ export default function Ppid() {
 
                 <div className="mt-10 pt-10 border-t">
                   <h3 className="text-lg font-bold mb-4">Portal Resmi PPID Kabupaten</h3>
-                  <a 
-                    href="https://ppid-desa.jemberkab.go.id/desa/grenden" 
-                    target="_blank" 
+                  <a
+                    href="https://ppid-desa.jemberkab.go.id/desa/grenden"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-xl bg-secondary px-8 py-4 text-base font-bold text-secondary-foreground shadow-lg transition-all hover:bg-secondary/90 hover:-translate-y-1 w-full sm:w-auto"
                   >

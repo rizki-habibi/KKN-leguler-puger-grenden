@@ -228,8 +228,8 @@ export default function AnggotaKkn() {
               <Users className="w-4 h-4" />
               KKN Reguler ITS Mandala Jember — Desa Grenden 2026
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Anggota KKN</h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Anggota KKN</h1>
+            <p className="text-white/90 text-lg max-w-xl mx-auto">
               Tim mahasiswa KKN Reguler ITS Mandala Jember yang bertugas di Desa Grenden, Kecamatan Puger, Kabupaten Jember.
             </p>
 

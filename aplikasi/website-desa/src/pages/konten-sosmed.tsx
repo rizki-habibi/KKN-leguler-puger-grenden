@@ -44,8 +44,8 @@ export default function KontenSosmed() {
             <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm font-medium mb-6">
               <LinkIcon className="w-4 h-4" />KKN Reguler — Konten Media Sosial
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Konten Sosial Media</h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Konten Sosial Media</h1>
+            <p className="text-white/90 text-lg max-w-xl mx-auto">
               Kumpulan tautan konten dokumentasi kegiatan KKN di Instagram, TikTok, YouTube, dan platform lainnya.
             </p>
           </FadeIn>

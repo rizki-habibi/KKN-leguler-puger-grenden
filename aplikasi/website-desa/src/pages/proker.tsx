@@ -138,8 +138,8 @@ export default function ProkerPage() {
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <ClipboardList className="w-8 h-8 text-accent" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Program Kerja KKN</h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Program Kerja KKN</h1>
+            <p className="text-white/90 text-lg max-w-2xl mx-auto leading-relaxed">
               Daftar program kerja Tim KKN Reguler ITS Mandala Jember di Desa Grenden, Kecamatan Puger,
               Kabupaten Jember Tahun 2026.
             </p>

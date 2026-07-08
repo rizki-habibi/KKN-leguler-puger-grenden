@@ -26,8 +26,8 @@ export default function VisiMisi() {
         </div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl font-bold font-serif mb-6">Visi & Misi</h1>
-            <p className="text-xl md:text-2xl text-primary-foreground/80 max-w-3xl leading-relaxed">
+            <h1 className="text-4xl md:text-6xl font-bold font-serif mb-6 text-yellow-300">Visi & Misi</h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl leading-relaxed">
               Arah kebijakan dan tujuan pembangunan Pemerintah Desa Grenden beserta komitmen transparansi PPID.
             </p>
           </FadeIn>

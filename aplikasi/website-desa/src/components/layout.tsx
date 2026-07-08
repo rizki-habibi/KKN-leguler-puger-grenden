@@ -6,6 +6,167 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
+/* ── Modal Makna Logo ─────────────────────────────────────── */
+const ELEMEN_LOGO = [
+  {
+    no: 1,
+    judul: "Ombak",
+    isi: "Melambangkan wilayah yang dekat dengan pesisir.",
+  },
+  {
+    no: 2,
+    judul: "Rumah",
+    isi: "Melambangkan pusat kehidupan masyarakat desa.",
+  },
+  {
+    no: 3,
+    judul: "Matahari",
+    isi: "Melambangkan harapan.",
+  },
+  {
+    no: 4,
+    judul: "Mahasiswa",
+    isi: "Melambangkan pengabdian dan pendampingan masyarakat.",
+  },
+  {
+    no: 5,
+    judul: "Ikon Sirkuit",
+    isi: "Melambangkan inovasi dan digitalisasi.",
+  },
+  {
+    no: 6,
+    judul: "Garis Putih Berkelok",
+    isi: "Melambangkan pemanfaatan teknologi digital.",
+  },
+];
+
+const FILOSOFI_LOGO = [
+  {
+    judul: '"Desa Grenden"',
+    isi: "Menegaskan lokasi pengabdian sebagai wujud keterlibatan langsung di tengah masyarakat.",
+  },
+  {
+    judul: '"Institut Teknologi dan Sains Mandala Jember"',
+    isi: "Menunjukkan identitas dan asal perguruan tinggi yang mendukung kegiatan pengabdian ini.",
+  },
+  {
+    judul: '"Kuliah Kerja Nyata"',
+    isi: "Menjadi identitas mahasiswa yang melaksanakan pengabdian nyata di desa.",
+  },
+];
+
+function ModalMaknaLogo({ onClose }: { onClose: () => void }) {
+  // Tutup dengan Escape
+  useEffect(() => {
+    function handler(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header modal */}
+        <div className="sticky top-0 bg-white rounded-t-3xl px-6 pt-6 pb-4 border-b border-border flex items-start gap-4">
+          <img
+            src="/logo-kkn.jpeg"
+            alt="Logo KKN Desa Grenden"
+            className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 shrink-0"
+          />
+          <div className="flex-1">
+            <h2 className="font-bold font-serif text-xl text-foreground leading-tight">
+              Makna Logo KKN
+            </h2>
+            <p className="text-sm text-muted-foreground mt-0.5">
+              KKN Reguler ITS Mandala Jember — Desa Grenden 2026
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full hover:bg-muted flex items-center justify-center text-muted-foreground transition-colors shrink-0"
+            aria-label="Tutup"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Daftar makna */}
+        <div className="px-6 py-5 space-y-6">
+          {/* Elemen Logo */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
+              Elemen Logo
+            </h3>
+            <div className="space-y-3">
+              {ELEMEN_LOGO.map((item) => (
+                <div
+                  key={item.no}
+                  className="flex gap-3 p-3.5 rounded-2xl border border-border bg-muted/30"
+                >
+                  <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold shrink-0">
+                    {item.no}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-foreground text-sm">{item.judul}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{item.isi}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Filosofi */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
+              Filosofi Tulisan
+            </h3>
+            <div className="space-y-3">
+              {FILOSOFI_LOGO.map((item, i) => (
+                <div
+                  key={i}
+                  className="p-3.5 rounded-2xl border border-border bg-amber-50/60"
+                >
+                  <p className="font-bold text-sm text-foreground">{item.judul}</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.isi}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-xs text-muted-foreground italic text-center pt-1">
+            Sumber:{" "}
+            <a
+              href="https://www.instagram.com/kkn_desagrendenpuger"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-medium hover:underline"
+            >
+              @kkn_desagrendenpuger
+            </a>
+          </p>
+        </div>
+
+        <div className="px-6 pb-6">
+          <button
+            onClick={onClose}
+            className="w-full bg-primary text-white rounded-xl py-2.5 text-sm font-bold hover:bg-primary/90 transition-colors"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Tipe navigasi ────────────────────────────────────────── */
 interface NavItem {
   name: string;
@@ -193,6 +354,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showMaknaLogo, setShowMaknaLogo] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -217,19 +379,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <img
-              src="/logo-kkn.jpeg"
-              alt="Logo KKN Desa Grenden"
-              className="w-10 h-10 rounded-full object-cover group-hover:scale-105 transition-transform shadow-sm border border-border"
-            />
-            <div>
-              <h1 className="font-serif font-bold text-xl text-primary leading-tight">Desa Grenden</h1>
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Gambar logo — klik buka modal makna */}
+            <button
+              onClick={() => setShowMaknaLogo(true)}
+              className="group relative focus:outline-none"
+              aria-label="Lihat makna logo KKN"
+              title="Klik untuk melihat makna logo"
+            >
+              <img
+                src="/logo-kkn.jpeg"
+                alt="Logo KKN Desa Grenden"
+                className="w-10 h-10 rounded-full object-cover group-hover:scale-105 transition-transform shadow-sm border border-border group-hover:ring-2 group-hover:ring-primary/40"
+              />
+              {/* Tooltip kecil */}
+              <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] bg-foreground text-background px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                Makna logo
+              </span>
+            </button>
+            {/* Teks — klik navigasi ke beranda */}
+            <Link href="/" className="group">
+              <h1 className="font-serif font-bold text-xl text-primary leading-tight group-hover:text-primary/80 transition-colors">Desa Grenden</h1>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Kabupaten Jember
               </p>
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
@@ -294,6 +469,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       <main className="flex-grow pt-[88px]">{children}</main>
+
+      {/* Modal Makna Logo */}
+      {showMaknaLogo && (
+        <ModalMaknaLogo onClose={() => setShowMaknaLogo(false)} />
+      )}
 
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground pt-16 pb-8">

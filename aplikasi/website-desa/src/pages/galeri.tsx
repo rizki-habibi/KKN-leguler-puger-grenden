@@ -28,8 +28,8 @@ export default function GaleriPage() {
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Camera className="w-8 h-8 text-accent" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">Galeri Desa</h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-yellow-300">Galeri Desa</h1>
+            <p className="text-xl text-white/90 leading-relaxed">
               Potret kehidupan, keindahan alam, dan dinamika kegiatan masyarakat Desa Grenden.
             </p>
           </FadeIn>
